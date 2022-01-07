@@ -12,9 +12,9 @@
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://unpkg.com/@themesberg/flowbite@1.3.0/dist/flowbite.min.css" />
+    {{--    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">--}}
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://unpkg.com/@themesberg/flowbite@1.3.0/dist/flowbite.min.css"/>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -33,19 +33,33 @@
                     'askHimBlue': '#2b6cf2',
                     'grey_clair': '#dedcdc',
                 }
+            },
+            extend: {
+                backgroundImage: {
+                    'poigne': "url({{asset('assets/img/poinge.jpg')}})",
+                }
             }
         }
     </script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
 </head>
 <body>
 
 
-    @yield('navbar')
+@yield('navbar')
 
-<div class="container">
+<div >
     @yield('content')
 </div>
 
 
-    <script src="https://unpkg.com/@themesberg/flowbite@1.3.0/dist/flowbite.bundle.js"></script>
+<script src="https://unpkg.com/@themesberg/flowbite@1.3.0/dist/flowbite.bundle.js"></script>
+
+<footer class="bg-gray-200">
+    <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+        <a href="#" class="text-xl font-bold text-gray-500 hover:text-gray-400">Brand</a>
+        <p class="py-2 text-gray-500 sm:py-0">All rights reserved</p>
+    </div>
+</footer>
 </body>

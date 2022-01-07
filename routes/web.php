@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+// AUTHENTICATION
+Route::get('/login', [\App\Http\Controllers\AuthController::class, 'ViewLogin'] )->name('login');
+Route::get('/register', [\App\Http\Controllers\AuthController::class, 'ViewRegister'] )->name('register');
+

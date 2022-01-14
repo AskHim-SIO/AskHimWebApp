@@ -125,6 +125,9 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/blade-ui-kit/blade-ui-kit" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/blade-ui-kit/blade-zondicons" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/blade-ui-kit/blade-icons" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/pear/pear_exception" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/pear/net_url2" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/pear/http_request2" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

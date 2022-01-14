@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,11 +15,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [\App\Http\Controllers\Controller::class, 'TestGet'])->name("home");
 
 // AUTHENTICATION
-Route::get('/login', [\App\Http\Controllers\AuthController::class, 'ViewLogin'] )->name('login');
-Route::get('/register', [\App\Http\Controllers\AuthController::class, 'ViewRegister'] )->name('register');
+Route::get('/login', [AuthController::class, 'ViewLogin'] )->name('login');
+Route::post('/login/connect', [AuthController::class, 'Login'] )->name('login.connect');
+Route::post('/login/register', [AuthController::class, 'Register'] )->name('register.connect');
+Route::get('/register', [AuthController::class, 'ViewRegister'] )->name('register');
+
+// DECONNEXION
+Route::get('/ABientot', [AuthController::class, 'Disconnect'] )->name('sign.out');
+
 

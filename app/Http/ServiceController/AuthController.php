@@ -94,11 +94,10 @@ class AuthController extends Controller
 
             return redirect()->route('home');
 
-        } elseif (401 === $statuscode) {
-            //todo toast mail ou mot de passe invalide
-            return redirect()->back();
-        } elseif (500 === $statuscode) {
-            //todo page 500
+        } elseif (304 === $statuscode) {
+            echo "304";
+        } elseif (404 === $statuscode) {
+            echo "404";
         }
     }
 

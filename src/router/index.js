@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import isAuth from '../middleware/isAuth'
+import checkGuid from '../middleware/checkGuid'
+
 
 Vue.use(VueRouter)
 
@@ -8,23 +11,31 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: {
+      middleware: [checkGuid],
+    },
   },
   {
     path: '/about',
     name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import('../views/About.vue')
   },
   {
     path: '/se-connecter',
     name: 'Login',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
+    component: () => import('../views/Login.vue'),
+    meta: {
+      middleware: [isAuth],
+    },
+  },
+  {
+    path: '/rejoindre',
+    name: 'Rejoindre',
+    component: () => import('../views/Register.vue'),
+    meta: {
+      middleware: [isAuth],
+    },
   }
 ]
 

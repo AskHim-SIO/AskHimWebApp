@@ -1,6 +1,8 @@
+import store from "../store";
+
 export default ({ next }) => {
     // Your custom if statement
-    if ( localStorage.getItem('guid') === null){
+    if (store.state.guid === ""){
         next();
     } else {
         next({

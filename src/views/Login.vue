@@ -61,6 +61,7 @@
 import ButtonWhite from "../components/buttonWhite";
 import ButtonBlue from "../components/buttonBlue";
 import axios from "axios";
+import store from "../store";
 
 export default {
   name: "Login",
@@ -102,7 +103,7 @@ export default {
         axios.post('http://api.askhim.ctrempe.fr:80/auth/login', this.form)
             .then((res)=>{
               if(res.status === 200){
-                localStorage.setItem('guid', res.data);
+                store.commit("setGuid", res.data);
                 window.location.href = "/profile"
               }
             })

@@ -1,11 +1,13 @@
+import store from "../store";
+
 export default ({next}) => {
     // Your custom if statement
-    if (localStorage.getItem('guid') === null) {
-        localStorage.clear()
-        sessionStorage.clear()
+    if (store.state.guid === "") {
+        store.commit("logOut")
         next();
     } else {
-        const guid = localStorage.getItem('guid')
+        const guid = store.state.guid
+        console.log(guid)
         const urlTokenValid = 'http://api.askhim.ctrempe.fr:80/auth/token-valid?request=' + guid;
         const urlGetUser = 'http://api.askhim.ctrempe.fr:80/user/get-user/' + guid;
 
@@ -13,26 +15,21 @@ export default ({next}) => {
             .then(response => response.json())
             .then(repos => {
                 if (repos.success) {
-                    if (sessionStorage.getItem('name') === null) {
+                    if (store.state.profile.name === "") {
                         fetch(urlGetUser)
                             .then(response2 => response2.json())
                             .then(repos2 => {
-                                sessionStorage.setItem('firstname', repos2.firstname);
-                                sessionStorage.setItem('name', repos2.name)
-                                console.log(repos2)
-                                if (repos2.profilPicture !== null) {
-                                    sessionStorage.setItem('profilPicture', repos2.profilPicture)
-                                }
+                                store.commit('login', {
+                                    firstname: repos2.firstname,
+                                    name: repos2.name,
+                                    profilePicture: repos2.profilPicture,
+                                })
                                 next()
                             })
-
-                    } else {
-                        next()
                     }
 
                 } else {
-                    localStorage.clear()
-                    sessionStorage.clear()
+                    store.commit('logOut')
                     next({
                         path: '/se-connecter',
                         replace: true

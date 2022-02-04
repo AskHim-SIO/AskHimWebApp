@@ -59,7 +59,7 @@
             </div>
           </div>
           <div
-              class="w-full h-64 mt-8 md:mx-4 rounded-md overflow-hidden bg-cover bg-center md:mt-0 md:w-1/2"
+              class="w-full  h-64 mt-8 md:mx-4 rounded-md overflow-hidden bg-cover bg-center md:mt-0 md:w-1/2"
               style="background-image: url('https://graphiste.com/blog/wp-content/uploads/2019/09/une-graphiste-banniere-web-inspiration-810x403.jpg')">
             <div class="bg-gray-900 bg-opacity-75 flex items-center h-full">
               <div class="px-10 max-w-xl">

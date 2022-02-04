@@ -9,12 +9,15 @@
               <div class="flex flex-wrap justify-center">
                 <div class="w-full px-4 flex justify-center">
                   <div class="relative">
-                    <img alt="..." v-bind:src="this.profilPicture" class="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px">
+                    <img alt="..." v-if="this.profilePicture !== ''" v-bind:src="this.profilePicture"
+                         class="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px">
+                    <img alt="..." v-else src="http://cdn.askhim.ctrempe.fr/userPicture.png"
+                         class="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px">
                   </div>
                 </div>
                 <div class="w-full px-4 text-center mt-20">
                   <h3 class="text-xl font-semibold leading-normal mt-4 text-blueGray-700 mb-2">
-                    {{ this.firstname }} {{this.lastname}}
+                    {{ this.firstname }} {{ this.name }}
                   </h3>
                 </div>
                 <div class="w-full px-4 text-center">
@@ -62,11 +65,14 @@
                       structure. An artist of considerable range.
                     </p>
                     <div class="flex justify-center">
-                      <div>
-                        <ButtonRed  v-on:click="deconnexion" name="Se deconnecter"></ButtonRed>
+                      <div class="pt-2">
+                        <button type="submit" v-on:click="deconnexion"
+                                class="text-white bg-[#ff0000] hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                          Se deconnecter
+                        </button>
                       </div>
                       <div>
-                        <buttonBlue name="Modifier le profil"></buttonBlue>
+                        <buttonBlue type="class" name="Modifier le profil"></buttonBlue>
                       </div>
                     </div>
                   </div>
@@ -83,31 +89,32 @@
 
 <script>
 import ButtonBlue from "../components/buttonBlue";
-import ButtonRed from "../components/buttonRed";
+import store from "../store";
 
 export default {
-  components: {ButtonBlue, ButtonRed},
+  components: {ButtonBlue},
   name: "Profile",
-  data() {
-    return {
-      guid: '',
-      firstname: '',
-      lastname: '',
-      profilPicture: ''
-    }
-  },
+
   methods: {
     deconnexion: function () {
-      localStorage.clear();
-      sessionStorage.clear();
+      store.commit('logOut');
+      window.location.href = '/';
     }
   },
-  mounted() {
-    this.guid = localStorage.getItem('guid');
-    this.firstname = sessionStorage.getItem('firstname')
-    this.lastname = sessionStorage.getItem('name')
-    this.profilPicture = sessionStorage.getItem('profilPicture')
-  }
+  computed: {
+    firstname() {
+      return store.state.profile.firstname;
+    },
+    guid() {
+      return store.state.guid;
+    },
+    name() {
+      return store.state.profile.name;
+    },
+    profilePicture() {
+      return store.state.profile.profilePicture;
+    }
+  },
 }
 </script>
 

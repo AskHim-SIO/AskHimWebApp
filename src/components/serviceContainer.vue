@@ -111,14 +111,14 @@ export default {
 
       if (direction === "gauche") {
         if(this.long <= this.$refs.container.scrollWidth - this.$refs.container.clientWidth)
-        this.long = this.long + 400;
+        this.long = this.long + 600;
         this.$refs.container.scrollTo({
           left: this.long,
           behavior: 'smooth'
         })
       } else {
-        if (this.long >= 400) {
-          this.long = this.long - 400;
+        if (this.long >= 600) {
+          this.long = this.long - 600;
 
           this.$refs.container.scrollTo({
             left: this.long,

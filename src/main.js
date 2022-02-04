@@ -1,8 +1,19 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import middleware from "@grafikri/vue-middleware"
+import InfiniteLoading from 'vue-infinite-loading'
+import Debounce from 'debounce'
+import Vuex from 'vuex'
+
+Vue.use(Debounce)
+Vue.use(InfiniteLoading);
+Vue.use(Vuex)
 
 Vue.config.productionTip = false
+
+router.beforeEach(middleware())
+
 
 new Vue({
   router,

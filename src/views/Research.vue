@@ -1,58 +1,52 @@
 <template>
-  <div>
-    <div class="flex">
-      <div class="flax-initial grow">
-        <h3 class="text-gray-600 text-2xl font-medium">{{ titre }}</h3>
+  <div class="bg-white">
+    <header>
+      <div class="container mx-auto px-6 py-3">
+        <div class="relative mt-6 max-w-lg mx-auto">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                            <svg class="h-5 w-5 text-gray-500" viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+          <input
+              class="w-full border rounded-md pl-10 pr-4 py-2 focus:border-askHim-blue focus:outline-none focus:shadow-outline"
+              type="text" placeholder="Recherche">
+        </div>
       </div>
+      <select v-model="newsType" @change="changeType">
+        <!-- Type options -->
+      </select>
+    </header>
+    <main class="my-8">
+      <div class="container mx-auto p-6">
+        <div class="flex flex-wrap justify-center">
 
-      <div class="flex">
-        <button class="rounded-full hover:border hover:border-askHim-blue hover:border-2" v-on:click="scroll('droite')">
-          <svg class="h-8 w-8 text-askHim-blue" width="35" height="35" viewBox="0 0 24 24"
-               stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-               stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z"/>
-            <polyline points="11 7 6 12 11 17"/>
-            <polyline points="17 7 12 12 17 17"/>
-          </svg>
-        </button>
-      </div>
-      <div class="flax pl-5">
-        <button class="rounded-full hover:border hover:border-askHim-blue hover:border-2" v-on:click="scroll('gauche')"
-                id="slideLeft">
-          <svg class="h-8 w-8 text-askHim-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="13 17 18 12 13 7"/>
-            <polyline points="6 17 11 12 6 7"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-    <div class="async">
-      <div class="flex flex-col mt-5">
-        <div class="flex overflow-x-hidden overflow-y-hidden snap-x snap-mandatory" ref="container">
-          <div v-for="service in services" :key="service.id" class="p-4 rounded-xl hover:scale-105 duration-500 transform transition cursor-pointer">
+          <div v-for="test in list" v-bind:key="test.id" class="p-4 rounded-xl hover:scale-105 duration-500 transform transition cursor-pointer">
             <!-- Tag Discount -->
             <div
                 class="top-0 left-0 mt-3 px-2 rounded-lg absolute z-30 bg-green-500 text-gray-100 text-xs md:text-sm font-medium md:block">
-              {{ service.type.libelle }}
+              <p>lib</p>
             </div>
             <div class="top-0 left-0 h-2 md:h-3 mt-5 px-2 absolute z-20 bg-green-500"></div>
             <div class="top-0 left-0 h-2 md:h-3 mt-6 pl-5 rounded-3xl absolute z-0 bg-green-600"></div>
             <div class="w-52 pb-2 bg-white rounded-xl shadow-xl z-10">
               <div class="relative">
                 <!-- :src="image.largeImageURL"     -->
-                <img :src="service.type.defaultPhoto"
+                <img src="https://docs.microsoft.com/fr-fr/windows-server/storage/dfs-namespaces/media/dfs-overview.png"
                      class="max-h-60 object-cover rounded-t-xl" alt="">
                 <!-- Tag rekomendasi -->
                 <!--                                                            <div class="bottom-0 right-0 mb-2 mr-2 px-2 rounded-lg absolute bg-yellow-500 text-gray-100 text-xs font-medium">Pour vous</div>-->
               </div>
               <div class="px-2 py-1">
                 <!-- Product Title -->
-                <div class="text-sm md:text-base font-bold pr-2">{{ service.name }}</div>
+                <div class="text-sm md:text-base font-bold pr-2">{{ test.name }}</div>
                 <div class="flex py-2">
                   <!-- Distance -->
                   <div class="bg-gray-200 p-1 mr-2 rounded-lg text-xs font-medium text-gray-900">
-                    {{ service.lieu.ville }}
+                    ville
                   </div>
                   <div class="flex justify-between item-center">
                     <div class="flex items-center">
@@ -63,7 +57,7 @@
                       </svg>
                       <!-- Rating total -->
                       <p class="text-gray-600 font-bold text-xs md:text-sm ml-1">
-                        {{ service.price }}
+                        {{test.price}}
                         <!-- Jumlah review -->
                         <span class="text-gray-500 font-normal">AskCoins</span>
                       </p>
@@ -80,57 +74,27 @@
               </div>
             </div>
           </div>
+
         </div>
       </div>
-    </div>
+    </main>
   </div>
 </template>
 
-
 <script>
-import axios from "axios";
 
 export default {
-  name: "container",
-  props: ['title', 'api'],
-  data: function () {
+  name: "Research",
+  data() {
     return {
-      route: this.api,
-      titre: this.title,
-      services: [],
-      long: 0,
-    }
-  },
-  mounted() {
-    axios
-        .get(this.route)
-        .then(response => (this.services = response.data))
-  },
-  methods: {
-    scroll: function (direction) {
+      page: 1,
+      list: [],
+      newsType: 'story',
+      infiniteId: +new Date(),
 
-      if (direction === "gauche") {
-        if(this.long <= this.$refs.container.scrollWidth - this.$refs.container.clientWidth)
-        this.long = this.long + 600;
-        this.$refs.container.scrollTo({
-          left: this.long,
-          behavior: 'smooth'
-        })
-      } else {
-        if (this.long >= 600) {
-          this.long = this.long - 600;
-
-          this.$refs.container.scrollTo({
-            left: this.long,
-            behavior: 'smooth'
-          })
-        }
-      }
-    }
+    };
   },
 }
-
-
 </script>
 
 <style scoped>

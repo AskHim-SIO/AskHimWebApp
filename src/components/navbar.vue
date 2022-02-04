@@ -44,7 +44,9 @@
                     class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
               <span class="sr-only">Ouvrir le menu</span>
-              <img class="w-8 h-8 rounded-full" src="http://cdn.askhim.ctrempe.fr/userPicture.png"
+              <img class="w-8 h-8 rounded-full" v-if="this.profilPicture === null" src="http://cdn.askhim.ctrempe.fr/userPicture.png"
+                   alt="user photo">
+              <img class="w-8 h-8 rounded-full" v-else v-bind:src="this.profilPicture"
                    alt="user photo">
             </button>
           </div>
@@ -58,10 +60,7 @@
                   class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">{{ this.firstname }}</span>
             </div>
             <ul class="py-1" aria-labelledby="dropdown">
-              <li>
-                <a href="#"
-                   class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Mon profil</a>
-              </li>
+              <router-link to="/profile"><li><a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Mon profil</a></li></router-link>
               <li>
                 <a href="#"
                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Mes services</a>
@@ -124,12 +123,14 @@ export default {
     return {
       guid: '',
       firstname: '',
-      lastname: ''
+      lastname: '',
+      profilPicture: ''
     }
   },
   methods: {
     deconnexion: function () {
       localStorage.clear();
+      sessionStorage.clear();
     }
   },
 
@@ -137,6 +138,7 @@ export default {
     this.guid = localStorage.getItem('guid');
     this.firstname = sessionStorage.getItem('firstname')
     this.lastname = sessionStorage.getItem('name')
+    this.profilPicture = sessionStorage.getItem('profilPicture')
   }
 }
 </script>

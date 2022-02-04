@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import isAuth from '../middleware/isAuth'
+import isNotAuth from '../middleware/isNotAuth'
 import checkGuid from '../middleware/checkGuid'
 
 
@@ -36,7 +37,28 @@ const routes = [
     meta: {
       middleware: [isAuth],
     },
-  }
+  },
+  {
+    path: '/rechercher',
+    name: 'Research',
+    component: () => import('../views/Research'),
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('../views/Profile.vue'),
+    meta: {
+      middleware: [isNotAuth, checkGuid],
+    },
+  },
+  {
+    path: '/ajouter-service',
+    name: 'AddService',
+    component: () => import('../views/AddService.vue'),
+    meta: {
+      middleware: [isNotAuth, checkGuid],
+    },
+  },
 ]
 
 const router = new VueRouter({

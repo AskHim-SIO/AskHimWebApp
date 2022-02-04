@@ -19,18 +19,18 @@ export default ({next}) => {
                             .then(repos2 => {
                                 sessionStorage.setItem('firstname', repos2.firstname);
                                 sessionStorage.setItem('name', repos2.name)
+                                console.log(repos2)
                                 if (repos2.profilPicture !== null) {
-                                    sessionStorage.profilPicture('profilPicture', repos2.profilPicture)
+                                    sessionStorage.setItem('profilPicture', repos2.profilPicture)
                                 }
                                 next()
                             })
-                    }
-                    else{
+
+                    } else {
                         next()
                     }
 
-                }
-                else{
+                } else {
                     localStorage.clear()
                     sessionStorage.clear()
                     next({

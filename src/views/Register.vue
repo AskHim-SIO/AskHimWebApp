@@ -73,7 +73,14 @@
                 <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
               </svg>
             </div>
-            <input datepicker v-model="dateNaiss" name="dateNaiss"  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Date de naissance">
+
+            <div class="relative">
+              <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+              </div>
+              <input datepicker type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
+            </div>
+
           </div>
         </div>
 
@@ -122,8 +129,7 @@ export default {
 
       if (!this.password) {
         this.errors.push('Le mot de passe est requis.');
-      }
-      else if (this.password.length <= 5) {
+      } else if (this.password.length <= 5) {
         this.errors.push('Le mot de passe est trop court.');
       }
 
@@ -147,22 +153,21 @@ export default {
         this.form.password = this.password;
 
         axios.post('http://api.askhim.ctrempe.fr:80/user/create-user', this.form)
-            .then((res)=>{
-              if(res.status === 201){
+            .then((res) => {
+              if (res.status === 201) {
                 axios.post('http://api.askhim.ctrempe.fr:80/auth/login', this.form)
-                    .then((res)=>{
-                      if(res.status === 200){
+                    .then((res) => {
+                      if (res.status === 200) {
                         localStorage.setItem('guid', res.data);
                         window.location.href = "/"
-                      }
-                      else{
-                        window.location.href="se-connecter";
+                      } else {
+                        window.location.href = "se-connecter";
                       }
                     })
               }
             })
             .catch(error => {
-              if(error.response.status === 401){
+              if (error.response.status === 401) {
                 this.errors.push("L'email et le mot de passe ne correspondent pas")
               }
             })

@@ -85,7 +85,11 @@
         </div>
         <!-- -- Affichage des services recents -- -->
         <div>
-          <service-container title="Service récents"></service-container>
+          <service-container title="Service récents" api="http://api.askhim.ctrempe.fr:80/service/get-recent-services"></service-container>
+        </div>
+
+        <div v-for="categorie in categories" v-bind:key="categorie.id">
+          <service-container v-bind:title="categorie.libelle" v-bind:api="'http://api.askhim.ctrempe.fr:80/service/get-services-from-type/'+categorie.id"></service-container>
         </div>
 
       </div>

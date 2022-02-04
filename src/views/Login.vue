@@ -103,7 +103,7 @@ export default {
             .then((res)=>{
               if(res.status === 200){
                 localStorage.setItem('guid', res.data);
-                window.location.href = "/"
+                window.location.href = "/profile"
               }
             })
         .catch(error => {

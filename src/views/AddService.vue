@@ -48,9 +48,14 @@
                 <p class="text-gray-600 text-2md font-medium pt-3">Adresse</p>
               </div>
               <div class="basis-1/2 m-3 mt-6">
-                <input class="appearance-none block w-full px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-lg
+                <input type="select" v-model="selectAdress" class="appearance-none block w-full px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-lg
                                 transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                       placeholder="Inserer votre adresse" v-model="adresse"/>
+                       placeholder="Inserer votre adresse" @input="debounceSearch"/>
+                <button type="submit" v-for="address in adresses" :key="address.properties.id"  v-on:click="select(address.properties.label)"
+                        class="text-white bg-[#2B6CF2] hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 mt-2 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  {{address.properties.label}}
+                </button>
+
               </div>
             </div>
           </div>
@@ -75,7 +80,27 @@ export default {
   data: function (){
     return{
       types : [],
-      selected : 'Choisir une catégorie'
+      selectAdress:'',
+      adresses:[],
+      selected : 'Choisir une catégorie',
+      debounce: null
+    }
+  },
+  methods: {
+    debounceSearch(event) {
+
+      clearTimeout(this.debounce)
+
+      this.debounce = setTimeout(() => {
+
+        axios
+            .get('https://api-adresse.data.gouv.fr/search/?q='+event.target.value+'&type=housenumber&autocomplete=1')
+            .then(response => (this.adresses = response.data.features))
+      }, 600)
+    },
+    select(value){
+      this.selectAdress = value
+      this.adresses = []
     }
   },
   mounted () {

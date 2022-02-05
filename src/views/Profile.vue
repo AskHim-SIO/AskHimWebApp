@@ -9,7 +9,7 @@
               <div class="flex flex-wrap justify-center">
                 <div class="w-full px-4 flex justify-center">
                   <div class="relative">
-                    <img alt="..." v-if="this.profilePicture !== ''" v-bind:src="this.profilePicture"
+                    <img alt="..." v-if="this.profilePicture" v-bind:src="this.profilePicture"
                          class="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px">
                     <img alt="..." v-else src="http://cdn.askhim.ctrempe.fr/userPicture.png"
                          class="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px">

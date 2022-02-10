@@ -30,7 +30,8 @@
     <div class="async">
       <div class="flex flex-col mt-5">
         <div class="flex overflow-x-hidden overflow-y-hidden snap-x snap-mandatory" ref="container">
-          <div v-for="service in services" :key="service.id" class="p-4 rounded-xl hover:scale-105 duration-500 transform transition cursor-pointer">
+          <div v-for="service in services" :key="service.id"
+               class="p-4 rounded-xl hover:scale-105 duration-500 transform transition cursor-pointer">
             <!-- Tag Discount -->
             <div
                 class="top-0 left-0 mt-3 px-2 rounded-lg absolute z-30 bg-green-500 text-gray-100 text-xs md:text-sm font-medium md:block">
@@ -74,8 +75,10 @@
                 <!--                                                            <p class="pb-1 md:pb-2 text-xs md:text-sm text-gray-500">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>-->
                 <!-- Tombol pesan -->
                 <div class="flex flex-row-reverse">
-                  <a class="inset-x-0 bottom-0 flex justify-center bg-blue-500 hover:bg-white text-sm md:text-base border hover:border-2 hover:border-blue-500 rounded-xl w-14 md:w-16 p-1 text-gray-100 hover:text-blue-900"
-                     href="#">Voir</a>
+                  <router-link :to="{ path: '/service/'+ service.id}">
+                    <a class="inset-x-0 bottom-0 flex justify-center bg-blue-500 hover:bg-white text-sm md:text-base border hover:border-2 hover:border-blue-500 rounded-xl w-14 md:w-16 p-1 text-gray-100 hover:text-blue-900"
+                      href="#">Voir</a>
+                  </router-link>
                 </div>
               </div>
             </div>
@@ -110,8 +113,8 @@ export default {
     scroll: function (direction) {
 
       if (direction === "gauche") {
-        if(this.long <= this.$refs.container.scrollWidth - this.$refs.container.clientWidth)
-        this.long = this.long + 600;
+        if (this.long <= this.$refs.container.scrollWidth - this.$refs.container.clientWidth)
+          this.long = this.long + 600;
         this.$refs.container.scrollTo({
           left: this.long,
           behavior: 'smooth'

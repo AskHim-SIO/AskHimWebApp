@@ -1,14 +1,12 @@
 import store from "../store";
 
 export default ({next}) => {
-    console.log("25")
     // Your custom if statement
     if (store.state.guid === "") {
         store.commit("logOut")
         next();
     } else {
         const guid = store.state.guid
-        console.log(guid)
         const urlTokenValid = 'http://api.askhim.ctrempe.fr:80/auth/token-valid?request=' + guid;
         const urlGetUser = 'http://api.askhim.ctrempe.fr:80/user/get-user/' + guid;
 
@@ -16,9 +14,7 @@ export default ({next}) => {
             .then(response => response.json())
             .then(repos => {
                 if (repos.success) {
-                    console.log("1")
                     if (store.state.profile.name === "") {
-                        console.log("2")
                         fetch(urlGetUser)
                             .then(response2 => response2.json())
                             .then(repos2 => {
@@ -35,7 +31,6 @@ export default ({next}) => {
                     }
 
                 } else {
-                    console.log("yo")
                     store.commit('logOut')
                     next({
                         path: '/se-connecter',

@@ -15,10 +15,7 @@
               <router-link to="/rechercher">Rechercher</router-link>
             </a>
             <a href="#" class="text-gray-800 text-sm font-semibold hover:text-[#2B6CF2] mr-4">
-              <router-link to="/ajouter-service">Ajouter un</router-link>
-            </a>
-            <a href="#" class="text-gray-800 text-sm font-semibold hover:text-[#2B6CF2] mr-4">
-              <router-link to="/savoir-plus">Ajouter un</router-link>
+              <router-link to="/ajouter-service">Ajouter un service</router-link>
             </a>
             <a href="#" class="text-gray-800 text-sm font-semibold hover:text-[#2B6CF2]">
               <router-link to="/contact">Contact</router-link>

@@ -151,7 +151,7 @@ export default {
     axios
         .get('http://api.askhim.ctrempe.fr:80/service/get-service/' + this.id)
         .then(response => {
-          if (response.data.state === true) {
+          if (response.data.state === false) {
             this.$router.push('/home');
           } else {
 

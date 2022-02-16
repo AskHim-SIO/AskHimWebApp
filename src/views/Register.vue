@@ -13,12 +13,12 @@
         <h1 class="text-gray-800 font-bold text-2xl mb-1">Bienvenue !</h1>
         <p class="text-sm font-normal text-gray-600 mb-7">Vous souhaitez nous rejoindre ?</p>
 
-        <p v-if="errors.length">
-        <ul>
-
-          <li v-for="error in errors" :key="error">
-            <span class="text-red-600">{{ error }}</span></li>
-        </ul>
+        <div v-if="errors.length" class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+          <ul>
+            <li v-for="error in errors" :key="error">
+              <span>{{ error }}</span></li>
+          </ul>
+        </div>
 
         <div class="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
@@ -80,7 +80,7 @@
               </div>
 <!--              <input datepicker type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">-->
               <div>
-                <datepicker class="w-full" placeholder="Inserez votre date de naissance" v-model="dateNaiss"></datepicker>
+                <datepicker :language="fr" class="w-full" placeholder="Inserez votre date de naissance" v-model="dateNaiss"></datepicker>
               </div>
 
             </div>
@@ -88,7 +88,7 @@
           </div>
         </div>
 
-        <buttonBlue name="S\'inscrire"></buttonBlue>
+        <buttonBlue name="S'inscrire"></buttonBlue>
         <span class="text-sm ml-2 hover:text-blue-500 cursor-pointer">Forgot Password ?</span>
       </form>
     </div>
@@ -100,6 +100,8 @@ import ButtonWhite from "../components/buttonWhite";
 import ButtonBlue from "../components/buttonBlue";
 import axios from "axios";
 import Datepicker from 'vuejs-datepicker';
+import {fr} from 'vuejs-datepicker/dist/locale'
+import router from "../router";
 
 export default {
 
@@ -107,6 +109,7 @@ export default {
   components: {ButtonWhite, ButtonBlue, Datepicker},
   data() {
     return {
+      fr: fr,
       errors: [],
       email: "",
       checkin: '',
@@ -165,16 +168,21 @@ export default {
                     .then((res) => {
                       if (res.status === 200) {
                         localStorage.setItem('guid', res.data);
-                        window.location.href = "/"
+                        router.push({ name: 'Home'})
                       } else {
-                        window.location.href = "se-connecter";
+                        router.push({ name: 'Login'})
+                      }
+                    })
+                    .catch(error => {
+                      if (error.response.status === 401) {
+                        this.errors.push("L'email et le mot de passe ne correspondent pas")
                       }
                     })
               }
             })
             .catch(error => {
-              if (error.response.status === 401) {
-                this.errors.push("L'email et le mot de passe ne correspondent pas")
+              if (error.response.status === 409) {
+                this.errors.push("Un compte existe déjà avec cette adresse email")
               }
             })
       }

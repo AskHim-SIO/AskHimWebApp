@@ -62,6 +62,7 @@ import ButtonWhite from "../components/buttonWhite";
 import ButtonBlue from "../components/buttonBlue";
 import axios from "axios";
 import store from "../store";
+import router from "../router";
 
 export default {
   name: "Login",
@@ -104,9 +105,12 @@ export default {
             .then((res)=>{
               if(res.status === 200){
                 store.commit("setGuid", res.data);
-                window.location.href = "/profile"
               }
             })
+            .then(() => {
+              router.push({ name: 'Profile'})
+            })
+
         .catch(error => {
           if(error.response.status === 401){
             this.errors.push("L'email et le mot de passe ne correspondent pas")

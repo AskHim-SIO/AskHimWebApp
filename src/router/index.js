@@ -26,9 +26,20 @@ const routes = [
     },
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import('../views/About.vue')
+    path: '/service/:id',
+    name: 'Service',
+    component: () => import('../views/Service.vue'),
+    meta: {
+      middleware: [ checkGuid, isNotAuth],
+    },
+  },
+  {
+    path: '/chat',
+    name: 'Chat',
+    component: () => import('../views/Chat.vue'),
+    meta: {
+      middleware: [ checkGuid, isNotAuth],
+    },
   },
   {
     path: '/se-connecter',
@@ -55,6 +66,14 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: () => import('../views/Profile.vue'),
+    meta: {
+      middleware: [isNotAuth, checkGuid],
+    },
+  },
+  {
+    path: '/profile/update',
+    name: 'ProfileUpdate',
+    component: () => import('../views/ProfileUpdate.vue'),
     meta: {
       middleware: [isNotAuth, checkGuid],
     },

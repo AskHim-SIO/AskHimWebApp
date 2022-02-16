@@ -16,7 +16,8 @@ export default new Vuex.Store({
         profile: {
             name: "",
             firstname: "",
-            profilePicture: ""
+            profilePicture: "",
+            isAdmin: ""
         },
         guid: "",
     },
@@ -31,6 +32,7 @@ export default new Vuex.Store({
                 state.profile.name = values.name
                 state.profile.firstname = values.firstname
                 state.profile.profilePicture = values.profilePicture
+                state.profile.isAdmin = values.isAdmin
             }
             ,
             logOut(state) {
@@ -38,6 +40,7 @@ export default new Vuex.Store({
                 state.guid = '';
                 state.profile.firstname = '';
                 state.profile.profilePicture = '';
+                state.profile.isAdmin = '';
             }
 
         }

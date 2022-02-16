@@ -9,9 +9,7 @@
               <div class="flex flex-wrap justify-center">
                 <div class="w-full px-4 flex justify-center">
                   <div class="relative">
-                    <img alt="..." v-if="this.profilePicture" v-bind:src="this.profilePicture"
-                         class="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px">
-                    <img alt="..." v-else src="http://cdn.askhim.ctrempe.fr/userPicture.png"
+                    <img alt="..." v-bind:src="this.profilePicture"
                          class="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px">
                   </div>
                 </div>
@@ -72,7 +70,7 @@
                         </button>
                       </div>
                       <div>
-                        <buttonBlue type="class" name="Modifier le profil"></buttonBlue>
+                        <router-link to="profile/update"><buttonBlue type="class" name="Modifier le profil" data-modal-toggle="update-profile"></buttonBlue></router-link>
                       </div>
                     </div>
                   </div>
@@ -90,6 +88,7 @@
 <script>
 import ButtonBlue from "../components/buttonBlue";
 import store from "../store";
+import router from "../router";
 
 export default {
   components: {ButtonBlue},
@@ -98,7 +97,7 @@ export default {
   methods: {
     deconnexion: function () {
       store.commit('logOut');
-      window.location.href = '/';
+      router.push({ name: 'Home'})
     }
   },
   computed: {

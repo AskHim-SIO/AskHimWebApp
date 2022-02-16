@@ -1,15 +1,17 @@
 <template>
-  <UploadImages
-      @changed="handleImages"
-      :max="5"
-      maxError="Vous avez ateint le nombre de photos maximum"
-      uploadMsg="Ajoutez vos images"
-      fileError="Vous ne pouvez inserer que des images"
-      clearAll="Supprimez toutes les images"
+  <div>
+    <UploadImages
+        :max="5"
+        clearAll="Supprimez toutes les images"
+        fileError="Vous ne pouvez inserer que des images"
+        maxError="Vous avez ateint le nombre de photos maximum"
+        uploadMsg="Ajoutez vos images"
+        @changed="handleImages"></UploadImages>
 
 
 
-  />
+  </div>
+
 </template>
 
 
@@ -21,22 +23,10 @@ export default {
   components: {
     UploadImages,
   },
-  methods:{
-    handleImages(files){
-
+  methods: {
+    handleImages(files) {
       console.log(files)
-      /*
-        [
-          {
-              "name": "Screenshot from 2021-02-23 12-36-33.png",
-              "size": 319775,
-              "type": "image/png",
-              "lastModified": 1614080193596
-              ...
-          },
-          ...
-          ]
-       */
+      this.$emit('sendImages', {images: files})
     }
   }
 }

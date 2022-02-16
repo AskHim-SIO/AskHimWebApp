@@ -101,6 +101,7 @@ import ButtonBlue from "../components/buttonBlue";
 import axios from "axios";
 import Datepicker from 'vuejs-datepicker';
 import {fr} from 'vuejs-datepicker/dist/locale'
+import router from "../router";
 
 export default {
 
@@ -167,9 +168,9 @@ export default {
                     .then((res) => {
                       if (res.status === 200) {
                         localStorage.setItem('guid', res.data);
-                        window.location.href = "/"
+                        router.push({ name: 'Home'})
                       } else {
-                        window.location.href = "se-connecter";
+                        router.push({ name: 'Login'})
                       }
                     })
                     .catch(error => {

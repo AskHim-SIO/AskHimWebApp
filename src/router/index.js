@@ -71,6 +71,14 @@ const routes = [
     },
   },
   {
+    path: '/profile/update',
+    name: 'ProfileUpdate',
+    component: () => import('../views/ProfileUpdate.vue'),
+    meta: {
+      middleware: [isNotAuth, checkGuid],
+    },
+  },
+  {
     path: '/ajouter-service',
     name: 'AddService',
     component: () => import('../views/AddService.vue'),

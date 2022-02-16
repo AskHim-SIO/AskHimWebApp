@@ -38,9 +38,7 @@
                     class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
               <span class="sr-only">Ouvrir le menu</span>
-              <img class="w-8 h-8 rounded-full" v-if="!this.profilePicture" src="http://cdn.askhim.ctrempe.fr/userPicture.png"
-                   alt="user photo">
-              <img class="w-8 h-8 rounded-full" v-else v-bind:src="this.profilePicture"
+              <img class="w-8 h-8 rounded-full" v-bind:src="this.profilePicture"
                    alt="user photo">
             </button>
           </div>
@@ -58,6 +56,10 @@
               <li>
                 <a href="#"
                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Mes services</a>
+              </li>
+              <li v-if="this.isAdmin === 1">
+                <a href="http://localhost:8080/"
+                   class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Pannel admin</a>
               </li>
               <li>
                 <a href="/" v-on:click="deconnexion"
@@ -112,17 +114,15 @@
 
 <script>
 import store from "../store";
+import router from "../router";
 
 export default {
   name: 'navbar',
-  data() {
-    return {
-      guid: '',
-    }
-  },
+
   methods: {
     deconnexion: function () {
       store.commit('logOut');
+      router.push({ name: 'Home'})
     }
   },
   computed: {
@@ -134,11 +134,15 @@ export default {
     },
     profilePicture(){
       return store.state.profile.profilePicture;
+    },
+    isAdmin(){
+      return store.state.profile.isAdmin;
+    },
+    guid(){
+      return store.state.guid;
     }
   },
 
-  mounted() {
-    this.guid = store.state.guid
-  }
+
 }
 </script>

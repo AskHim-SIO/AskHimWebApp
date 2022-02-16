@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form method="POST" action="" @submit="checkForm">
+    <form action="" method="POST" @submit="checkForm">
       <div class="bg-white">
         <div class="container mx-auto px-40">
 
@@ -22,12 +22,11 @@
                 <p class="text-gray-600 text-2md font-medium pt-3">Type de service</p>
               </div>
               <div class="basis-1/2 m-3 mt-6">
-                <select class="form-select appearance-none block w-full px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-lg
-                                transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                        aria-label="Default select example" id="select" v-model="selected">
+                <select id="select"
+                        v-model="selected" aria-label="Default select example" class="form-select appearance-none block w-full px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-lg
+                                transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
                   <option selected>Choisir une catégorie</option>
                   <option v-for="unType in types" :key="unType.id" v-bind:value="unType">{{ unType.libelle }}</option>
-
                 </select>
               </div>
             </div>
@@ -36,9 +35,10 @@
                 <p class="text-gray-600 text-2md font-medium pt-3">Votre demande</p>
               </div>
               <div class="basis-1/2 m-3 mt-6">
-                <input class="appearance-none block w-full px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-lg
+                <input v-model="name"
+                       class="appearance-none block w-full px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-lg
                                 transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                       placeholder="Inserer l'objet de votre demande" v-model="name"/>
+                       placeholder="Inserer l'objet de votre demande"/>
               </div>
             </div>
             <div class="flex flex-row mb-2">
@@ -46,9 +46,9 @@
                 <p class="text-gray-600 text-2md font-medium pt-3">Rémunération</p>
               </div>
               <div class="basis-1/2 m-3 mt-6">
-                <input type="number" class="appearance-none block w-full px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-lg
+                <input v-model="price" class="appearance-none block w-full px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-lg
                                 transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                       placeholder="Inserer l'objet de votre demande" v-model="price"/>
+                       placeholder="Inserer l'objet de votre demande" type="number"/>
               </div>
             </div>
             <div class="flex flex-row">
@@ -57,8 +57,8 @@
               </div>
               <div class="basis-1/2 m-3 mt-6">
                 <div>
-                  <datepicker :language="fr" class="w-full" placeholder="Date du départ"
-                              v-model="dateStart"></datepicker>
+                  <datepicker v-model="dateStart" :language="fr" class="w-full"
+                              placeholder="Date du départ"></datepicker>
                 </div>
               </div>
             </div>
@@ -68,8 +68,8 @@
               </div>
               <div class="basis-1/2 m-3 mt-6">
                 <div>
-                  <datepicker :language="fr" class="w-full" placeholder="Date fin"
-                              v-model="dateEnd"></datepicker>
+                  <datepicker v-model="dateEnd" :language="fr" class="w-full"
+                              placeholder="Date fin"></datepicker>
                 </div>
               </div>
             </div>
@@ -79,11 +79,12 @@
                 <p class="text-gray-600 text-2md font-medium pt-3">Description</p>
               </div>
               <div class="basis-1/2 m-3 mt-6">
-                <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Votre
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400" for="message">Votre
                   description</label>
-                <textarea id="message" v-model="description" rows="4"
+                <textarea id="message" v-model="description"
                           class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          placeholder="Que voulez vous faire ?"></textarea>
+                          placeholder="Que voulez vous faire ?"
+                          rows="4"></textarea>
               </div>
             </div>
           </div>
@@ -100,11 +101,12 @@
                     <p class="text-gray-600 text-2md font-medium pt-3">Pourquoi avez vous besoin de vous déplacer ?</p>
                   </div>
                   <div class="basis-1/2 m-3 mt-6">
-                    <label for="motif" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Un
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400" for="motif">Un
                       motif</label>
-                    <textarea id="motif" v-model="addTransport.motif" rows="4"
+                    <textarea id="motif" v-model="addTransport.motif"
                               class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                              placeholder="Votre vos raisons"></textarea>
+                              placeholder="Votre vos raisons"
+                              rows="4"></textarea>
                   </div>
                 </div>
 
@@ -113,10 +115,10 @@
                     <p class="text-gray-600 text-2md font-medium pt-3">Nombre de places disponibles</p>
                   </div>
                   <div class="basis-1/2 m-3 mt-6">
-                    <input type="number" class="appearance-none block w-full px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-lg
+                    <input v-model="addTransport.nbPlaceDispo" class="appearance-none block w-full px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-lg
                                 transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                           placeholder="Nombres de places disponibles" v-model="addTransport.nbPlaceDispo"
-                           maxlength="10"/>
+                           maxlength="10" placeholder="Nombres de places disponibles"
+                           type="number"/>
                   </div>
                 </div>
 
@@ -125,14 +127,15 @@
                     <p class="text-gray-600 text-2md font-medium pt-3">Point de départ</p>
                   </div>
                   <div class="basis-1/2 m-3 mt-6">
-                    <input type="select" v-model="addTransport.pointArriver" class="appearance-none block w-full px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-lg
+                    <input v-model="addTransport.pointArriver" class="appearance-none block w-full px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-lg
                                 transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                           placeholder="Inserer votre adresse" @input="debounceSearchPointArriver"/>
+                           placeholder="Inserer votre adresse"
+                           type="select" @input="debounceSearchPointArriver"/>
                     <div v-if="adresses != []"
                          class="z-10  text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
                       <ul class="py-1">
                         <li v-for="address in adressesPointArriver" :key="address.properties.id"
-                            v-on:click="selectPointArriver(address.properties.label)" class="cursor-pointer">
+                            class="cursor-pointer" v-on:click="selectPointArriver(address.properties.label)">
                           <p
                               class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                             {{ address.properties.label }}</p>
@@ -147,14 +150,15 @@
                     <p class="text-gray-600 text-2md font-medium pt-3">Point d'arrivé</p>
                   </div>
                   <div class="basis-1/2 m-3 mt-6">
-                    <input type="select" v-model="addTransport.pointDepart" class="appearance-none block w-full px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-lg
+                    <input v-model="addTransport.pointDepart" class="appearance-none block w-full px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-lg
                                 transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                           placeholder="Inserer votre adresse" @input="debounceSearchPointDepart"/>
+                           placeholder="Inserer votre adresse"
+                           type="select" @input="debounceSearchPointDepart"/>
                     <div v-if="adresses != []"
                          class="z-10  text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
                       <ul class="py-1">
                         <li v-for="address in adressesPointDepart" :key="address.properties.id"
-                            v-on:click="selectPointDepart(address.properties.label)" class="cursor-pointer">
+                            class="cursor-pointer" v-on:click="selectPointDepart(address.properties.label)">
                           <p
                               class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                             {{ address.properties.label }}</p>
@@ -168,26 +172,121 @@
                     <p class="text-gray-600 text-2md font-medium pt-3">Votre véhicule</p>
                   </div>
                   <div class="basis-1/2 m-3 mt-6">
-                    <input class="appearance-none block w-full px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-lg
+                    <input v-model="addTransport.vehiculePerso"
+                           class="appearance-none block w-full px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-lg
                                 transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                           placeholder="Inserer le nom de votre véhicule" v-model="addTransport.vehiculePerso"/>
+                           placeholder="Inserer le nom de votre véhicule"/>
                   </div>
                 </div>
               </div>
 
+              <div v-if="selected.libelle === 'Formation'">
 
-              <div v-if="selected.libelle === 'Course'">
                 <div class="flex flex-row">
                   <div class="basis-1/2 m-3 mt-6">
-                    <p class="text-gray-600 text-2md font-medium pt-3">Type de course</p>
+                    <p class="text-gray-600 text-2md font-medium pt-3">Compétence à valider</p>
                   </div>
                   <div class="basis-1/2 m-3 mt-6">
-                    <select class="form-select appearance-none block w-full px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-lg
-                                  transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                            aria-label="Default select example" ref="select">
-                      <option selected>Choisir une catégorie</option>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400" for="message">Que
+                      voulez vous apprendre ?</label>
+                    <textarea v-model="addFormation.competence"
+                              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              placeholder="Que voulez vous apprendre ?"
+                              rows="4"></textarea>
+                  </div>
+                </div>
 
-                    </select>
+                <div class="flex flex-row">
+                  <div class="basis-1/2 m-3 mt-6">
+                    <p class="text-gray-600 text-2md font-medium pt-3">Le materiel requis</p>
+                  </div>
+                  <div class="basis-1/2 m-3 mt-6">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400" for="message">De quoi
+                      avez vous besoins ?</label>
+                    <textarea v-model="addFormation.materiel"
+                              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              placeholder="Listez ce dont vous avez besoins ?"
+                              rows="4"></textarea>
+                  </div>
+                </div>
+
+                <div class="flex flex-row">
+                  <div class="basis-1/2 m-3 mt-6">
+                    <p class="text-gray-600 text-2md font-medium pt-3">Présentiel ou distanciel ?</p>
+                  </div>
+                  <div class="basis-1/2 m-3 mt-6">
+                    <label class="flex relative items-center mb-4 cursor-pointer" for="toggle-example">
+                      <input id="toggle-example" v-model="addFormation.presence" class="sr-only"
+                             type="checkbox" v-on:click="presenceOnClick">
+                      <div
+                          class="w-11 h-6 bg-gray-200 rounded-full border border-gray-200 toggle-bg dark:bg-gray-700 dark:border-gray-600"></div>
+                      <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{ presence }}</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="flex flex-row mb-2">
+                  <div class="basis-1/2 m-3 mt-6">
+                    <p class="text-gray-600 text-2md font-medium pt-3">Nombre d'heures requises</p>
+                  </div>
+                  <div class="basis-1/2 m-3 mt-6">
+                    <input v-model="addFormation.nbHeure" class="appearance-none block w-full px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-lg
+                                transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                           placeholder="Le nombre d'heures requises" type="number"/>
+                  </div>
+                </div>
+              </div>
+
+              <div v-if="selected.libelle === 'Loisir'">
+                <div class="flex flex-row">
+                  <div class="basis-1/2 m-3 mt-6">
+                    <p class="text-gray-600 text-2md font-medium pt-3">Présence animal ?</p>
+                  </div>
+                  <div class="basis-1/2 m-3 mt-6">
+                    <label class="flex relative items-center mb-4 cursor-pointer" for="toggle-example2">
+                      <input id="toggle-example2" v-model="addLoisir.animal" class="sr-only"
+                             type="checkbox" v-on:click="presenceAnimalOnClick">
+                      <div
+                          class="w-11 h-6 bg-gray-200 rounded-full border border-gray-200 toggle-bg dark:bg-gray-700 dark:border-gray-600"></div>
+                      <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{
+                          presenceAnimal
+                        }}</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="flex flex-row mb-2">
+                  <div class="basis-1/2 m-3 mt-6">
+                    <p class="text-gray-600 text-2md font-medium pt-3">Nombre de personnes</p>
+                  </div>
+                  <div class="basis-1/2 m-3 mt-6">
+                    <input v-model="addLoisir.nbPersonne" class="appearance-none block w-full px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-lg
+                                transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                           placeholder="Inserer l'objet de votre demande" type="number"/>
+                  </div>
+                </div>
+                <div class="flex flex-row">
+                  <div class="basis-1/2 m-3 mt-6">
+                    <p class="text-gray-600 text-2md font-medium pt-3">Loisir à faire</p>
+                  </div>
+                  <div class="basis-1/2 m-3 mt-6">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400" for="loisir">Votre
+                      loisir</label>
+                    <textarea id="loisir" v-model="addLoisir.jeu"
+                              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              placeholder="Quel loisir pour vous ?"
+                              rows="4"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div v-if="selected.libelle === 'Tâche ménagère'">
+                <div class="flex flex-row mb-2">
+                  <div class="basis-1/2 m-3 mt-6">
+                    <p class="text-gray-600 text-2md font-medium pt-3">Nombre d'heures requises</p>
+                  </div>
+                  <div class="basis-1/2 m-3 mt-6">
+                    <input v-model="addFormation.nbHeure" class="appearance-none block w-full px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-lg
+                                transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                           placeholder="Le nombre d'heures requises" type="number"/>
                   </div>
                 </div>
               </div>
@@ -204,15 +303,16 @@
                 <p class="text-gray-600 text-2md font-medium pt-3">Adresse</p>
               </div>
               <div class="basis-1/2 m-3 mt-6">
-                <input type="select" v-model="selectAdress" class="appearance-none block w-full px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-lg
+                <input v-model="selectAdress" class="appearance-none block w-full px-3 py-1.5 text-base text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded-lg
                                 transition ease-in-out m-0  focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                       placeholder="Inserer votre adresse" @input="debounceSearch"/>
+                       placeholder="Inserer votre adresse"
+                       type="select" @input="debounceSearch"/>
 
                 <div v-if="adresses != []"
                      class="z-10  text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
                   <ul class="py-1">
                     <li v-for="address in adresses" :key="address.properties.id"
-                        v-on:click="select(address.properties.label)" class="cursor-pointer">
+                        class="cursor-pointer" v-on:click="select(address.properties.label)">
                       <p class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                         {{ address.properties.label }}</p>
                     </li>
@@ -224,7 +324,7 @@
           </div>
 
           <h3 class="text-gray-600 text-2xl font-medium pb-2">Vos photos</h3>
-          <uploadFile class="mb-2"></uploadFile>
+          <uploadFile class="mb-2" @sendImages="getImages"></uploadFile>
           <div>
             <button-blue class="flex flex-row-reverse" name="Ask Him !"></button-blue>
           </div>
@@ -242,6 +342,9 @@ import Datepicker from "vuejs-datepicker";
 import {fr} from "vuejs-datepicker/dist/locale";
 import ButtonBlue from "../components/buttonBlue";
 import store from "../store";
+import router from "../router";
+import {readFile} from "./utils"
+
 
 export default {
   name: "AddService",
@@ -258,6 +361,8 @@ export default {
       selected: 'Choisir une catégorie',
       debounce: null,
       fr: fr,
+      presence: 'Distanciel',
+      presenceAnimal: 'Non',
 
       dateEnd: null,
       dateStart: null,
@@ -285,8 +390,23 @@ export default {
         vehiculePerso: ""
       },
 
+      addLoisir: {
+        animal: false,
+        dateEnd: null,
+        dateStart: null,
+        description: "",
+        jeu: "",
+        lieuAdresse: "",
+        lieuCodePostal: 0,
+        lieuVille: "",
+        name: "",
+        nbPersonne: 0,
+        price: 0,
+        userToken: "",
+      },
+
       addCourse: {
-        accompagnement : "",
+        accompagnement: "",
         dateEnd: null,
         dateStart: null,
         description: "",
@@ -299,14 +419,57 @@ export default {
         userToken: ""
       },
 
+      addFormation: {
+        competence: "",
+        dateEnd: null,
+        dateStart: null,
+        description: "",
+        lieuAdresse: "",
+        lieuCodePostal: 0,
+        lieuVille: "",
+        materiel: "",
+        name: "",
+        nbHeure: 0,
+        presence: "",
+        price: "",
+        userToken: ""
+      },
 
+      addTacheMenagere: {
+        dateEnd: null,
+        dateStart: null,
+        description: "",
+        libelle: "",
+        lieuAdresse: "",
+        lieuCodePostal: 0,
+        lieuVille: "",
+        materiel: "",
+        name: "",
+        nbHeure: 0,
+        price: "",
+        userToken: ""
+      },
+
+      jsonImg: {
+        fileStr: ""
+      },
+
+      images: "",
+      config: {
+        headers: {
+          'Content-Length': 0,
+          'Content-Type': 'text/plain'
+        },
+        responseType: 'text'
+      },
     }
-  }
-  ,
+  },
   methods: {
+    getImages(payload) {
+      this.images = payload.images
+    },
     checkForm: function (e) {
       this.errors = [];
-
       if (this.selected != "Choisir une catégorie") {
 
         if (this.selected.libelle === "Transport") {
@@ -328,6 +491,36 @@ export default {
           }
 
         }
+        if (this.selected.libelle === "Formation") {
+
+          if (!this.addFormation.nbHeure) {
+            this.errors.push("Indiquez combien d'heures sont requises");
+          } else {
+            if (this.addFormation.nbHeure <= 0 || this.addFormation.nbHeure >= 999) {
+              this.errors.push("Indiquez un nombre valide");
+            }
+          }
+
+          if (!this.addFormation.materiel) {
+            this.errors.push("Indiquez le matériel requis");
+          }
+        }
+
+        if (this.selected.libelle === "Loisir") {
+
+          if (!this.addLoisir.nbPersonne) {
+            this.errors.push("Indiquez combien de personnes seront présentes");
+          } else {
+            if (this.addLoisir.nbPersonne <= 0 || this.addLoisir.nbPersonne >= 999) {
+              this.errors.push("Indiquez un nombre valide");
+            }
+          }
+
+          if (!this.addLoisir.jeu) {
+            this.errors.push("Indiquez les loisirs souhaités");
+          }
+        }
+
       } else {
         this.errors.push("Choisissez un type de service");
       }
@@ -360,13 +553,13 @@ export default {
       }
 
       if (!this.errors.length) {
-        this.addTransport.userToken = store.state.guid
 
         this.lieuVille = this.adressesDetail.city
         this.lieuCodePostal = this.adressesDetail.citycode
         this.lieuAdresse = this.adressesDetail.name
 
         if (this.selected.libelle === "Transport") {
+          this.addTransport.userToken = store.state.guid
           this.addTransport.dateEnd = this.dateEnd
           this.addTransport.dateStart = this.dateStart
           this.addTransport.description = this.description
@@ -376,23 +569,90 @@ export default {
           this.addTransport.name = this.name
           this.addTransport.price = this.price
 
+          // const config = {
+          //   headers: {
+          //     'Content-Type': 'text/plain'
+          //   },
+          //   responseType: 'text'
+          // };
+
           axios.post('http://api.askhim.ctrempe.fr:80/service/create-transport-service', this.addTransport)
               .then((res) => {
-                console.log(res)
+
+                if (this.images) {
+                  const arr = this.images.map(file => readFile(file)
+                      .then(contenu => {
+                            this.jsonImg.fileStr = contenu
+                            axios.post(`http://api.askhim.ctrempe.fr:80/photo/save-photo-to-service?serviceId=${res.data}`, this.jsonImg)
+                          }
+                      ))
+                  Promise.all(arr).then(() => {
+                    console.log("L'ensemble des appels ajax sont terminés.")
+                    router.push({name: 'Service', params: {id: res.data}})
+                  })
+                }
+                router.push({name: 'Service', params: {id: res.data}})
+
               })
-              .catch(e)
-          {
-            console.log(e)
-          }
         }
+        if (this.selected.libelle === "Formation") {
+          this.addFormation.userToken = store.state.guid
+          this.addFormation.dateEnd = this.dateEnd
+          this.addFormation.dateStart = this.dateStart
+          this.addFormation.description = this.description
+          this.addFormation.lieuAdresse = this.lieuAdresse
+          this.addFormation.lieuCodePostal = this.lieuCodePostal
+          this.addFormation.lieuVille = this.lieuVille
+          this.addFormation.name = this.name
+          this.addFormation.price = this.price
+
+          console.log(this.addFormation)
+          axios.post('http://api.askhim.ctrempe.fr:80/service/create-formation-service', this.addFormation)
+              .then((res) => {
+                router.push({name: 'Service', params: {id: res.data}})
+              })
+        }
+
+        if (this.selected.libelle === "Loisir") {
+          this.addLoisir.userToken = store.state.guid
+          this.addLoisir.dateEnd = this.dateEnd
+          this.addLoisir.dateStart = this.dateStart
+          this.addLoisir.description = this.description
+          this.addLoisir.lieuAdresse = this.lieuAdresse
+          this.addLoisir.lieuCodePostal = this.lieuCodePostal
+          this.addLoisir.lieuVille = this.lieuVille
+          this.addLoisir.name = this.name
+          this.addLoisir.price = this.price
+
+          axios.post('http://api.askhim.ctrempe.fr:80/service/create-loisir-service', this.addLoisir)
+              .then((res) => {
+                router.push({name: 'Service', params: {id: res.data}})
+              })
+        }
+
       }
 
 
       e.preventDefault();
 
-    },
-
-
+    }
+    ,
+    presenceOnClick() {
+      if (this.presence === "Présentiel") {
+        this.presence = "Distanciel"
+      } else {
+        this.presence = "Présentiel"
+      }
+    }
+    ,
+    presenceAnimalOnClick() {
+      if (this.presenceAnimal === "Oui") {
+        this.presenceAnimal = "Non"
+      } else {
+        this.presenceAnimal = "Oui"
+      }
+    }
+    ,
     debounceSearch(event) {
 
       clearTimeout(this.debounce)
@@ -405,7 +665,8 @@ export default {
               this.adresses = response.data.features
             })
       }, 600)
-    },
+    }
+    ,
     debounceSearchPointArriver(event) {
 
       clearTimeout(this.debounce)
@@ -416,7 +677,8 @@ export default {
             .get('https://api-adresse.data.gouv.fr/search/?q=' + event.target.value + '&type=housenumber&autocomplete=1')
             .then(response => (this.adressesPointArriver = response.data.features))
       }, 600)
-    },
+    }
+    ,
     debounceSearchPointDepart(event) {
 
       clearTimeout(this.debounce)
@@ -427,7 +689,8 @@ export default {
             .get('https://api-adresse.data.gouv.fr/search/?q=' + event.target.value + '&type=housenumber&autocomplete=1')
             .then(response => (this.adressesPointDepart = response.data.features))
       }, 600)
-    },
+    }
+    ,
     select(value) {
       this.selectAdress = value
       this.adresses.forEach(adresse => {
@@ -436,17 +699,21 @@ export default {
         }
       })
       this.adresses = []
-    },
+    }
+    ,
     selectPointArriver(value) {
       this.addTransport.pointArriver = value
       this.adressesPointArriver = []
-    },
+    }
+    ,
     selectPointDepart(value) {
       this.addTransport.pointDepart = value
       this.adressesPointDepart = []
-    },
-  }
-  ,
+    }
+    ,
+  },
+
+
   mounted() {
     axios
         .get('http://api.askhim.ctrempe.fr/type/get-types')

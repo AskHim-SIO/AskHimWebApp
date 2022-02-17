@@ -34,7 +34,7 @@ const routes = [
     },
   },
   {
-    path: '/chat',
+    path: '/chat/:chatService?',
     name: 'Chat',
     component: () => import('../views/Chat.vue'),
     meta: {
@@ -58,7 +58,7 @@ const routes = [
     },
   },
   {
-    path: '/rechercher',
+    path: '/rechercher/:type?',
     name: 'Research',
     component: () => import('../views/Research'),
   },

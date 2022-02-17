@@ -6,15 +6,16 @@
       <div class="story-ring flex justify-center items-center
                                 bg-white rounded-full relative cursor-pointer
                                 hover:transition-all duration-150 delay-100">
-        <a class="block rounded-full hover:bg-askHim-blue hover:-rotate-6 p-1 " href="#">
+        <router-link :to="{ name: 'Research', params: { type: categorie.libelle}}"><a class="block rounded-full hover:bg-askHim-blue hover:-rotate-6 p-1 " href="#">
           <!-- Thumbnail -->
-          <img class="w-25 rounded-full"
-               :src="categorie.defaultPhoto">
-        </a>
+          <img :src="categorie.defaultPhoto"
+               class="w-25 rounded-full">
+        </a></router-link>
       </div>
 
       <!-- Username -->
-      <span class="story-text font-medium">{{ categorie.libelle }}</span>
+
+      <span class="story-text font-medium rounded-full ">{{ categorie.libelle }}</span>
     </li>
   </ul>
 </template>
@@ -30,7 +31,7 @@ export default {
       categories: [],
     }
   },
-  mounted () {
+  mounted() {
     axios
         .get('http://api.askhim.ctrempe.fr/type/get-types')
         .then(response => (this.categories = response.data))

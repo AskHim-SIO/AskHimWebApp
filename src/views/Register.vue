@@ -102,6 +102,7 @@ import axios from "axios";
 import Datepicker from 'vuejs-datepicker';
 import {fr} from 'vuejs-datepicker/dist/locale'
 import router from "../router";
+import store from "../store";
 
 export default {
 
@@ -167,6 +168,7 @@ export default {
                 axios.post('http://api.askhim.ctrempe.fr:80/auth/login', this.form)
                     .then((res) => {
                       if (res.status === 200) {
+                        store.commit("setGuid", res.data)
                         localStorage.setItem('guid', res.data);
                         router.push({ name: 'Home'})
                       } else {

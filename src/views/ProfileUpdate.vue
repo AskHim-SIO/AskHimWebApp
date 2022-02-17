@@ -113,6 +113,9 @@ export default {
     updateProfile: function (e) {
       axios.get(`http://api.askhim.ctrempe.fr:80/user/get-user-by-token/${this.guid}`)
           .then(response => {
+            if(!this.updateUser.profilePicture){
+              this.updateUser.profilePicture = 'http://cdn.askhim.ctrempe.fr/defaultUser.png'
+            }
             axios.put(`http://api.askhim.ctrempe.fr/user/update-user/${this.guid}`, {
               address: this.updateUser.address,
               admin: this.updateUser.admin,

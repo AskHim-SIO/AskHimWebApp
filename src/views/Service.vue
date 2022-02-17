@@ -8,8 +8,8 @@
 
       <div class="flex-1 pt-2">
         <div id="app" class="flex flex-row ">
-          <div class="ml-4" v-for="(image, i) in images" :key="i">
-            <img class="image cursor-pointer" :src="image" @click="index = i">
+          <div v-for="(image, i) in images" :key="i" class="ml-4">
+            <img :src="image" class="image cursor-pointer" @click="index = i">
           </div>
           <vue-gallery-slideshow :images="images" :index="index" @close="index = null"></vue-gallery-slideshow>
         </div>
@@ -25,9 +25,10 @@
             <div class="p-4">
               <p class="mb-4 italic">Description : {{ service.description }}</p>
               <p class="mb-4 italic">De : {{ user.firstname }} {{ user.name }}</p>
-              <p class="mb-4 italic">Du : {{ dateStart }} au {{ dateEnd }}</p>
+              <p v-if="dateStart !== dateEnd" class="mb-4 italic">Du : {{ dateStart }} au {{ dateEnd }}</p>
+              <p v-else class="mb-4 italic">Le : {{ dateStart }}</p>
               <p class="mb-4 italic">Salaire : {{ service.price }} €</p>
-              <p class="mb-4 italic">Adresse : {{ lieu.ville }} </p>
+              <p v-if="type.libelle !== 'Transport'" class="mb-4 italic">Adresse : {{lieu.adresse}} - {{ lieu.ville }} - {{lieu.codePostal}} </p>
             </div>
 
             <div v-if="type.libelle === 'Transport'">
@@ -39,7 +40,7 @@
                 <p class="mb-4 italic">Point d'arrivée : {{ service.pointDepart }}</p>
                 <p class="mb-4 italic">Place : {{ service.nbPlaceDispo }} places disponibles</p>
                 <p class="mb-4 italic">Véhicule : {{ service.vehiculePerso }}</p>
-                <p class="mb-4 italic">Motif : {{ motif.libelle }}</p>
+                <p class="mb-4 italic">Motif : {{ motif }}</p>
               </div>
             </div>
             <div v-if="type.libelle === 'Course'">
@@ -48,8 +49,8 @@
               </div>
               <div class="p-4">
                 <p class="mb-4 italic">Commerce : {{ service.typeLieu }}</p>
-                <p class="mb-4 italic">Accompagnement : {{ service.accompagnement }}</p>
-                <p class="mb-4 italic">Adresse : {{ service.adresseLieu }}</p>
+                <p v-if="service.accompagnement" class="mb-4 italic">Accompagnement : Oui</p>
+                <p v-else class="mb-4 italic">Accompagnement : Non</p>
               </div>
             </div>
             <div v-if="type.libelle === 'Formation'">
@@ -57,13 +58,13 @@
                 <h1 class="ml-2 font-bold uppercase">Catégorie : {{ type.libelle }}</h1>
               </div>
               <div class="p-4">
-                <p class="mb-4 italic">Compétence recherché : {{service.competence.libelle}}</p>
+                <p class="mb-4 italic">Compétence recherché : {{ service.competence }}</p>
                 <p class="mb-4 italic">Nombre d'heure souhaité : {{ service.nbHeure }} heures</p>
-                <p class="mb-4 italic">Présence : booleun presentiel ou distenciel</p>
+                <p class="mb-4 italic">Présence : {{ service.presence }}</p>
                 <p class="mb-4 italic">Matériel :</p>
-                <ul class="border">
+                <ul class="border ml-4">
                   <li>
-                    {{service.materiel}}
+                    {{ service.materiel }}
                   </li>
                 </ul>
               </div>
@@ -73,18 +74,26 @@
                 <h1 class="ml-2 font-bold uppercase">Catégorie : {{ type.libelle }}</h1>
               </div>
               <div class="p-4">
-                <p class="mb-4 italic">Nombre de personnes : {{ service.nbPersonne }}</p>
-                <p class="mb-4 italic">Jeu : {{ service.jeu.libelle }}</p>
-                <p class="mb-4 italic">Animal : oui ou non</p>
+                <p v-if="service.nbPersonne === 0 || service.nbPersonne === 1" class="mb-4 italic">Nombre de personnes : {{ service.nbPersonne }} personne</p>
+                <p v-else class="mb-4 italic">Nombre de personnes : {{ service.nbPersonne }} personnes</p>
+                <p class="mb-4 italic">Jeu : {{ service.jeu }}</p>
+                <p  v-if="service.animal" class="mb-4 italic">Animal : Oui</p>
+                <p v-else class="mb-4 italic">Animal : Non</p>
               </div>
             </div>
             <div v-if="type.libelle === 'Tâche ménagère'">
               <div class="p-4 mt-6 bg-gray-100 rounded-full">
                 <h1 class="ml-2 font-bold uppercase">Catégorie : {{ type.libelle }}</h1>
               </div>
-              <div class="p-4">
-                <p class="mb-4 italic">Nombre de personnes : {{ service.nbPersonne }}</p>
-              </div>
+                <p class="pt-2 mb-4 italic">Tâche à faire : {{ service.libelle }}</p>
+                <p v-if="service.nbHeure === 0 || service.nbHeure === 1" class="mb-4 italic">1 heure requise</p>
+                <p v-else class="mb-4 italic">Nombres d'heures requises : {{ service.nbHeure }}</p>
+                <p class="mb-4 italic">Matériel :</p>
+                <ul class="border ml-4">
+                  <li>
+                    {{ service.materiel }}
+                  </li>
+                </ul>
             </div>
           </div>
 
@@ -94,17 +103,24 @@
             </div>
             <div class="mt-2">
               <template>
-                <l-map style="height: 300px" :zoom="zoom" :center="center">
+                <l-map :center="center" :zoom="zoom" style="height: 300px">
                   <l-tile-layer :url="url"></l-tile-layer>
                   <l-marker :lat-lng="markerLatLng"></l-marker>
                   <l-marker v-if="markerLatLng2 !== null" :lat-lng="markerLatLng2"></l-marker>
                 </l-map>
               </template>
               <a href="#">
-                <button
-                    class="flex justify-center w-full px-10 py-3 mt-6 font-medium text-white uppercase bg-gray-800 rounded-full shadow item-center hover:bg-gray-700 focus:shadow-outline focus:outline-none">
-                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--ic" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M22 2H2.01L2 22l4-4h16V2zm-4 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z" fill="#333aff"></path></svg>
-                  <span class="ml-2 mt-5px">Envoyer un message</span>
+                <button :disabled='isDisabled'
+                        class="flex justify-center w-full px-10 py-3 mt-6 font-medium text-white uppercase bg-gray-800 rounded-full shadow item-center hover:bg-gray-700 focus:shadow-outline focus:outline-none"
+                        v-on:click="initMessage">
+                  <svg aria-hidden="true" class="iconify iconify--ic" height="32"
+                       preserveAspectRatio="xMidYMid meet" role="img" viewBox="0 0 24 24" width="32"
+                       xmlns="http://www.w3.org/2000/svg"
+                       xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <path d="M22 2H2.01L2 22l4-4h16V2zm-4 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"
+                          fill="#333aff"></path>
+                  </svg>
+                  <span class="ml-2 mt-5px">{{ buttonValue }}</span>
                 </button>
               </a>
             </div>
@@ -120,6 +136,7 @@ import axios from "axios";
 import VueGallerySlideshow from 'vue-gallery-slideshow';
 import moment from "moment";
 import 'moment/locale/fr'
+import store from "../store";
 
 export default {
   name: "Service",
@@ -128,6 +145,8 @@ export default {
     return {
       id: this.$route.params.id,
       service: {},
+      isDisabled: false,
+      buttonValue: "Envoyer un message",
       type: {},
       user: {},
       lieu: {},
@@ -145,10 +164,23 @@ export default {
       markerLatLng2: null,
     }
   },
+  methods: {
+    initMessage() {
+      axios
+          .post(`http://api.askhim.ctrempe.fr/chat/init-discussion?serviceId=${this.id}&userToken=${store.state.guid}`)
+          .then((res) => {
+            console.log(res.data)
+            this.$router.push({
+              name: 'Chat',
+              params: { chatService: res.data }
+            });
 
+          })
+    }
+  },
   mounted() {
     axios
-        .get('http://api.askhim.ctrempe.fr:80/service/get-service/' + this.id)
+        .get('http://api.askhim.ctrempe.fr/service/get-service/' + this.id)
         .then(response => {
           if (response.data.state === false) {
             this.$router.push('/home');
@@ -196,6 +228,20 @@ export default {
                   })
                 })
           }
+        })
+    axios
+        .get(`http://api.askhim.ctrempe.fr:80/user/get-user-by-token/${store.state.guid}`)
+        .then(res => {
+          axios
+              .get(`http://api.askhim.ctrempe.fr:80/service/get-services-from-user-by-id/${res.data.id}`)
+              .then((res) => {
+                res.data.forEach(service => {
+                  if (service.id == this.id) {
+                    this.isDisabled = true,
+                    this.buttonValue = "Ce service est à vous"
+                  }
+                })
+              })
         })
 
 

@@ -26,8 +26,7 @@ export default new Vuex.Store({
         {
             setGuid(state, value) {
                 state.guid = value
-            }
-            ,
+            },
             login(state, values) {
                 state.profile.name = values.name
                 state.profile.firstname = values.firstname

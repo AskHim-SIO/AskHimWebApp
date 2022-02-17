@@ -53,14 +53,14 @@
             </div>
             <ul class="py-1" aria-labelledby="dropdown">
               <router-link to="/profile"><li><a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Mon profil</a></li></router-link>
-              <li>
+              <router-link to="/chat"><li>
                 <a href="#"
-                   class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Mes services</a>
-              </li>
-              <li v-if="this.isAdmin === 1">
+                   class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Mes messages</a>
+              </li></router-link>
+              <router-link to="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><li v-if="this.isAdmin">
                 <a href="http://localhost:8080/"
                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Pannel admin</a>
-              </li>
+              </li></router-link>
               <li>
                 <a href="/" v-on:click="deconnexion"
                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Se deconnecter</a>

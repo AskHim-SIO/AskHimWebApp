@@ -21,6 +21,7 @@ export default ({next}) => {
                                 firstname: repos2.firstname,
                                 name: repos2.name,
                                 profilePicture: repos2.profilPicture,
+                                isAdmin: repos2.admin   ,
                             })
                             next()
                         })
@@ -34,7 +35,6 @@ export default ({next}) => {
                 }
 
             })
-            .catch(err => console.log(err))
 
     }
 }

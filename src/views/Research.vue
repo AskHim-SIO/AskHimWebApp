@@ -20,8 +20,9 @@
         <div class="relative mt-6 max-w-lg mx-auto">
           <div class="flex flex-row mb-1 sm:mb-0">
             <div class="relative">
-              <select class="appearance-none h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                      @change="countChange($event)">
+              <select
+                  class="appearance-none h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  @change="countChange($event)">
                 <option value="5">5</option>
                 <option value="10">10</option>
                 <option value="25">25</option>
@@ -34,9 +35,10 @@
               </div>
             </div>
             <div class="relative">
-              <select class=" h-full  sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500"
-                      @change="selectChange($event)">
-                <option :value=null>Tout</option>
+              <select
+                  v-model="select"
+                  class=" h-full  sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500" @change="selectChange($event)">
+                <option value="Tout">Tout</option>
                 <option v-for="typeService in typeServices" v-bind:key="typeService.id" :value="typeService.libelle">
                   {{ typeService.libelle }}
                 </option>
@@ -59,12 +61,50 @@
           <div v-for="service in services" v-bind:key="service.id"
                class="p-4 rounded-xl hover:scale-105 duration-500 transform transition cursor-pointer">
             <!-- Tag Discount -->
-            <div
-                class="top-0 left-0 mt-3 px-2 rounded-lg absolute z-30 bg-green-500 text-gray-100 text-xs md:text-sm font-medium md:block">
-              <p>{{ service.type.libelle }}</p>
+            <div v-if="service.type.libelle === 'Transport'">
+              <div
+                  class="top-0 left-0 mt-3 px-2 rounded-lg absolute z-30 bg-green-500 text-gray-100 text-xs md:text-sm font-medium md:block">
+                {{ service.type.libelle }}
+              </div>
+              <div class="top-0 left-0 h-2 md:h-3 mt-5 px-2 absolute z-20 bg-green-500"></div>
+              <div class="top-0 left-0 h-2 md:h-3 mt-6 pl-5 rounded-3xl absolute z-0 bg-green-600"></div>
             </div>
-            <div class="top-0 left-0 h-2 md:h-3 mt-5 px-2 absolute z-20 bg-green-500"></div>
-            <div class="top-0 left-0 h-2 md:h-3 mt-6 pl-5 rounded-3xl absolute z-0 bg-green-600"></div>
+
+            <div v-if="service.type.libelle === 'Course'">
+              <div
+                  class="top-0 left-0 mt-3 px-2 rounded-lg absolute z-30 bg-blue-500 text-gray-100 text-xs md:text-sm font-medium md:block">
+                {{ service.type.libelle }}
+              </div>
+              <div class="top-0 left-0 h-2 md:h-3 mt-5 px-2 absolute z-20 bg-blue-500"></div>
+              <div class="top-0 left-0 h-2 md:h-3 mt-6 pl-5 rounded-3xl absolute z-0 bg-blue-600"></div>
+            </div>
+
+            <div v-if="service.type.libelle === 'Formation'">
+              <div
+                  class="top-0 left-0 mt-3 px-2 rounded-lg absolute z-30 bg-red-500 text-gray-100 text-xs md:text-sm font-medium md:block">
+                {{ service.type.libelle }}
+              </div>
+              <div class="top-0 left-0 h-2 md:h-3 mt-5 px-2 absolute z-20 bg-red-500"></div>
+              <div class="top-0 left-0 h-2 md:h-3 mt-6 pl-5 rounded-3xl absolute z-0 bg-red-600"></div>
+            </div>
+
+            <div v-if="service.type.libelle === 'Loisir'">
+              <div
+                  class="top-0 left-0 mt-3 px-2 rounded-lg absolute z-30 bg-yellow-500 text-gray-100 text-xs md:text-sm font-medium md:block">
+                {{ service.type.libelle }}
+              </div>
+              <div class="top-0 left-0 h-2 md:h-3 mt-5 px-2 absolute z-20 bg-yellow-500"></div>
+              <div class="top-0 left-0 h-2 md:h-3 mt-6 pl-5 rounded-3xl absolute z-0 bg-yellow-600"></div>
+            </div>
+
+            <div v-if="service.type.libelle === 'Tâche ménagère'">
+              <div
+                  class="top-0 left-0 mt-3 px-2 rounded-lg absolute z-30 bg-orange-500 text-gray-100 text-xs md:text-sm font-medium md:block">
+                {{ service.type.libelle }}
+              </div>
+              <div class="top-0 left-0 h-2 md:h-3 mt-5 px-2 absolute z-20 bg-orange-500"></div>
+              <div class="top-0 left-0 h-2 md:h-3 mt-6 pl-5 rounded-3xl absolute z-0 bg-orange-600"></div>
+            </div>
             <div class="w-52 pb-2 bg-white rounded-xl shadow-xl z-10">
               <div class="relative">
                 <!-- :src="image.largeImageURL"     -->
@@ -124,6 +164,9 @@ import router from "../router";
 
 export default {
   name: "Research",
+  props: {
+    someValueToPass: String
+  },
   data() {
     return {
       services: [],
@@ -131,8 +174,7 @@ export default {
       recherche: "",
       findServices: [],
       count: null,
-      select: null,
-
+      select: "Tout",
     };
   },
   methods: {
@@ -141,7 +183,7 @@ export default {
       this.debounceSearch()
     },
     selectChange(event) {
-      this.select = event.target.value
+      event.target.value === '' ? this.select = 'Tout' : this.select = event.target.value
       this.debounceSearch()
 
     },
@@ -154,29 +196,26 @@ export default {
               .then(response => {
                 this.services = []
                 response.data.forEach(service => {
-                  if(this.select){
-                    if(service.type.libelle === this.select){
+                  if (this.select !== "Tout") {
+                    if (service.type.libelle === this.select) {
                       this.services.push(service)
                     }
-                  }
-                  else{
+                  } else {
                     this.services.push(service)
                   }
                 })
               })
-        }
-        else{
+        } else {
           axios
               .get(`http://api.askhim.ctrempe.fr:80/service/search-services?query=${this.recherche}&count=${this.count}`)
               .then(response => {
                 this.services = []
                 response.data.forEach(service => {
-                  if(this.select){
-                    if(service.type.libelle === this.select){
+                  if (this.select !== "Tout") {
+                    if (service.type.libelle === this.select) {
                       this.services.push(service)
                     }
-                  }
-                  else{
+                  } else {
                     this.services = response.data
                   }
                 })
@@ -184,21 +223,37 @@ export default {
               })
         }
       }, 600)
-
     },
     selectService(service) {
       router.push({name: 'Service', params: {id: service}})
     }
   },
-  mounted() {
-
-    axios
-        .get("http://api.askhim.ctrempe.fr:80/service/get-recent-services")
-        .then(response => (this.services = response.data))
-
+  computed: {},
+  mounted: function () {
+    if(this.$route.params.type !== undefined){
+      this.select = this.$route.params.type
+    }
     axios
         .get("http://api.askhim.ctrempe.fr:80/type/get-types")
         .then(response => (this.typeServices = response.data))
+
+    if (this.select === 'Tout') {
+      axios
+          .get("http://api.askhim.ctrempe.fr:80/service/get-recent-services")
+          .then(response => {
+            this.services = response.data
+          })
+    } else {
+      axios
+          .get("http://api.askhim.ctrempe.fr:80/service/get-recent-services")
+          .then(response => {
+            response.data.forEach(service => {
+              if (service.type.libelle === this.select) {
+                this.services.push(service)
+              }
+            })
+          })
+    }
   },
 }
 </script>

@@ -430,6 +430,7 @@ export default {
   data: function () {
     return {
       types: [],
+      credit: 0,
       errors: [],
       selectAdress: '',
       adresses: [],
@@ -607,7 +608,7 @@ export default {
         this.errors.push("Choisissez un type de service");
       }
 
-      if(this.plusieurJoursBool){
+      if (this.plusieurJoursBool) {
         if (!this.dateEnd) {
           this.errors.push("il n'y a pas de date de fin");
         }
@@ -634,6 +635,9 @@ export default {
         if (this.price <= 0 || this.price >= 999) {
           this.errors.push("Le prix est incorrect");
         }
+        if (this.price > this.credit) {
+          this.errors.push("Vous ne possedez pas assez d'AskCoins")
+        }
       }
 
       if (!this.errors.length) {
@@ -644,10 +648,9 @@ export default {
 
         if (this.selected.libelle === "Transport") {
           this.addTransport.userToken = store.state.guid
-          if(this.plusieurJoursBool){
+          if (this.plusieurJoursBool) {
             this.addTransport.dateEnd = this.dateEnd
-          }
-          else{
+          } else {
             this.addTransport.dateEnd = this.dateStart
           }
           this.addTransport.dateStart = this.dateStart
@@ -687,10 +690,9 @@ export default {
         }
         if (this.selected.libelle === "Formation") {
           this.addFormation.userToken = store.state.guid
-          if(this.plusieurJoursBool){
+          if (this.plusieurJoursBool) {
             this.addFormation.dateEnd = this.dateEnd
-          }
-          else{
+          } else {
             this.addFormation.dateEnd = this.dateStart
           }
           this.addFormation.dateStart = this.dateStart
@@ -725,10 +727,9 @@ export default {
 
         if (this.selected.libelle === "Loisir") {
           this.addLoisir.userToken = store.state.guid
-          if(this.plusieurJoursBool){
+          if (this.plusieurJoursBool) {
             this.addLoisir.dateEnd = this.dateEnd
-          }
-          else{
+          } else {
             this.addLoisir.dateEnd = this.dateStart
           }
           this.addLoisir.dateStart = this.dateStart
@@ -762,10 +763,9 @@ export default {
 
         if (this.selected.libelle === "Course") {
           this.addCourse.userToken = store.state.guid
-          if(this.plusieurJoursBool){
+          if (this.plusieurJoursBool) {
             this.addCourse.dateEnd = this.dateEnd
-          }
-          else{
+          } else {
             this.addCourse.dateEnd = this.dateStart
           }
           this.addCourse.dateStart = this.dateStart
@@ -800,10 +800,9 @@ export default {
 
         if (this.selected.libelle === "Tâche ménagère") {
           this.addTacheMenagere.userToken = store.state.guid
-          if(this.plusieurJoursBool){
+          if (this.plusieurJoursBool) {
             this.addTacheMenagere.dateEnd = this.dateEnd
-          }
-          else{
+          } else {
             this.addTacheMenagere.dateEnd = this.dateStart
           }
           this.addTacheMenagere.dateStart = this.dateStart
@@ -932,6 +931,14 @@ export default {
     axios
         .get('http://api.askhim.ctrempe.fr/type/get-types')
         .then(response => (this.types = response.data))
+
+    axios.get(`http://api.askhim.ctrempe.fr:80/user/get-user-by-token/${store.state.guid}`)
+        .then(res => {
+
+          console.log(res.data.credit)
+          this.credit = res.data.credit
+
+        })
   }
 }
 </script>

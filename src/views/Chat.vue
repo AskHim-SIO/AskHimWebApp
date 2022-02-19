@@ -71,22 +71,29 @@
                 </button>
               </div>
               <div class="flex flex-row items-center justify-between text-xs mt-6">
-                <span class="font-bold">Archivied</span>
+                <span class="font-bold">Service plus disponibles</span>
                 <span
                     class="flex items-center justify-center bg-gray-300 h-4 w-4 rounded-full"
-                >7</span
+                >{{ archiveUtilisateurs.length }}</span
                 >
               </div>
-              <div class="flex flex-col space-y-1 mt-4 -mx-2">
-                <button
-                    class="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2"
-                >
+              <div class="flex flex-col space-y-1 mt-4 -mx-2 h-48 overflow-y-auto">
+                <button v-for="archiveUtilisateur in archiveUtilisateurs" v-bind:key="archiveUtilisateur.uuid"
+                        class="flex flex-row items-center hover:bg-gray-100 rounded-xl p-2"
+                        v-on:click="loadChat(archiveUtilisateur)">
+                  <!--                        v-on:click="loadChatArchive(archiveUtilisateur)"-->
+
                   <div
                       class="flex items-center justify-center h-8 w-8 bg-indigo-200 rounded-full"
                   >
-                    H
+                    <img alt="user photo" class="w-8 h-8 rounded-full"
+                         v-bind:src="archiveUtilisateur.User.profilPicture">
                   </div>
-                  <div class="ml-2 text-sm font-semibold">Henry Boyd</div>
+                  <div class="ml-2 text-sm font-semibold">{{ archiveUtilisateur.Service.name }}</div>
+                  <div class="ml-2 text-xs font-semibold">{{ archiveUtilisateur.User.firstname }} {{
+                      archiveUtilisateur.User.name
+                    }}
+                  </div>
                 </button>
               </div>
             </div>
@@ -97,17 +104,26 @@
           <div class="flex flex-col flex-auto  p-20">
 
             <div class="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full ">
+              <svg aria-hidden="true" class="absolute right-0 iconify iconify--ic" height="32"
+                   preserveAspectRatio="xMidYMid meet" role="img" viewBox="0 0 24 24" width="32"
+                   xmlns="http://www.w3.org/2000/svg"
+                   xmlns:xlink="http://www.w3.org/1999/xlink">
+                <path
+                    d="M15.73 3H8.27L3 8.27v7.46L8.27 21h7.46L21 15.73V8.27L15.73 3zm.51 11.83l-1.41 1.41L12 13.41l-2.83 2.83l-1.41-1.41L10.59 12L7.76 9.17l1.41-1.41L12 10.59l2.83-2.83l1.41 1.41L13.41 12l2.83 2.83z"
+                    fill="#ff0000"></path>
+              </svg>
               <!-- profile picture-->
               <div v-if="this.lastChat != null" class="w-full px-4 flex justify-center pt-5">
                 <div class="relative">
-                  <img alt="..." v-bind:src="lastChat.User.profilPicture"
-                       class="shadow-xl rounded-full h-auto align-middle border-none absolute -m-20 -ml-20 lg:-ml-16 max-w-100-px">
-                  <div class="ml-2 text-md font-semibold -mt-10 ml-10">{{ lastChat.User.firstname }} {{ lastChat.User.name }}</div>
+                  <img alt="..."
+                       class="shadow-xl rounded-full h-auto align-middle border-none absolute -m-20 -ml-20 lg:-ml-16 max-w-100-px"
+                       v-bind:src="lastChat.User.profilPicture">
+                  <div class="ml-2 text-md font-semibold -mt-10 ml-10">{{ lastChat.User.firstname }}
+                    {{ lastChat.User.name }}
+                  </div>
                 </div>
 
               </div>
-
-
 
 
               <!-- messages -->
@@ -187,7 +203,7 @@
                   <div class="ml-4">
                     <button
                         :disabled="chatDisable"
-                        class="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
+                        class="flex items-center justify-center bg-blue-500 hover:bg-blue-600 rounded-full text-white px-4 py-1 flex-shrink-0"
                         type="submit"
                     >
                       <span>Envoyer</span>
@@ -210,27 +226,28 @@
                     </button>
 
                   </div>
-                  <!--                  <button-->
-                  <!--                      class="flex items-center justify-center bg-green-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0 ml-2"-->
-                  <!--                  >-->
-                  <!--                    <span>Valider</span>-->
-                  <!--                    <span class="ml-2">-->
-                  <!--                  <svg-->
-                  <!--                      class="w-4 h-4 transform rotate-45 -mt-px"-->
-                  <!--                      fill="none"-->
-                  <!--                      stroke="currentColor"-->
-                  <!--                      viewBox="0 0 24 24"-->
-                  <!--                      xmlns="http://www.w3.org/2000/svg"-->
-                  <!--                  >-->
-                  <!--                    <path-->
-                  <!--                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"-->
-                  <!--                        stroke-linecap="round"-->
-                  <!--                        stroke-linejoin="round"-->
-                  <!--                        stroke-width="2"-->
-                  <!--                    ></path>-->
-                  <!--                  </svg>-->
-                  <!--                </span>-->
-                  <!--                  </button>-->
+                  <button v-if="estAuteur"
+                          class="flex items-center justify-center bg-green-500 hover:bg-green-600 rounded-full text-white px-4 py-1 flex-shrink-0 ml-2"
+                          v-on:click="finaliser()"
+                  >
+                    <span>Valider</span>
+                    <span class="ml-2">
+                    <svg
+                        class="w-4 h-4 transform rotate-45 -mt-px"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                          d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                      ></path>
+                    </svg>
+                  </span>
+                  </button>
                 </div>
               </form>
             </div>
@@ -250,25 +267,76 @@ export default {
   data: function () {
     return {
       utilisateurs: [],
+      archiveUtilisateurs: [],
       messages: [],
       id: 0,
+      serviceId: 0,
       writeMessage: '',
       discussionToken: 0,
       chatDisable: true,
       loadUser: null,
-      lastChat: null
+      lastChat: null,
+      estAuteur: false,
     }
   },
   methods: {
+    finaliser() {
+      axios.put(`http://api.askhim.ctrempe.fr:80/service/validate-service?serviceId=${this.lastChat.Service.id}&userId=${this.id}`)
+          .then((res) => {
+            if (res.data.success) {
+              console.log("yoyo")
+              clearInterval(store.state.interval)
+              store.commit('unSetInterval')
+
+              clearInterval(store.state.interval2)
+              store.commit('unSetInterval2')
+
+              this.messages = []
+              this.chatDisable = true
+
+              this.reloadConv()
+            }
+          })
+    },
     loadChat(chat) {
-      console.log(chat)
-      this.lastChat = chat
-      this.chatDisable = false
+      this.estAuteur = false;
+      this.serviceId = chat.Service.id
+      axios.get(`http://api.askhim.ctrempe.fr:80/service/get-services-from-user-by-token/${this.guid}`)
+          .then(res => {
+            res.data.forEach(service => {
+              if (service.id === chat.Service.id) {
+                this.estAuteur = true
+              }
+            })
+          })
+
+      if (store.state.interval)
+        clearInterval(store.state.interval)
+
       axios.get(`http://api.askhim.ctrempe.fr:80/chat/get-discussion-by-id/${chat.Uuid}`)
           .then(res => {
             this.messages = res.data.messages
             this.discussionToken = res.data.uuid
+
+            this.lastChat = chat
           })
+
+      this.chatDisable = false
+
+      const intervalName = setInterval(() => {
+        axios.get(`http://api.askhim.ctrempe.fr:80/chat/get-discussion-by-id/${chat.Uuid}`)
+            .then(res => {
+              console.log(res)
+              this.messages = res.data.messages
+              this.discussionToken = res.data.uuid
+
+              this.lastChat = chat
+            })
+      }, 1000);
+
+
+      store.commit('setInterval', intervalName)
+
     },
     sendMessage(e) {
       if (this.discussionToken !== 0 && this.guid && this.writeMessage !== "") {
@@ -281,8 +349,89 @@ export default {
             })
       }
       e.preventDefault();
+    },
+
+
+    reloadConv() {
+
+      axios.get(`http://api.askhim.ctrempe.fr:80/user/get-user-by-token/${this.guid}`)
+          .then(res => {
+            this.id = res.data.id
+            axios.get(`http://api.askhim.ctrempe.fr:80/chat/get-discussions-from-user-by-token/${this.guid}`)
+                .then(res => {
+                  this.utilisateurs = []
+                  this.archiveUtilisateurs = []
+
+                  res.data.forEach(discussion => {
+                    if (discussion.service.state) {
+                      discussion.users.forEach(user => {
+                        if (user.id !== this.id) {
+                          this.utilisateurs.push({
+                            User: user,
+                            Uuid: discussion.uuid,
+                            Messages: discussion.messages,
+                            Service: discussion.service
+                          })
+                        }
+                      })
+                    } else {
+                      discussion.users.forEach(user => {
+                        if (user.id !== this.id) {
+                          this.archiveUtilisateurs.push({
+                            User: user,
+                            Uuid: discussion.uuid,
+                            Messages: discussion.messages,
+                            Service: discussion.service
+                          })
+                        }
+                      })
+
+                    }
+                  })
+                })
+          })
+      const interval2 = setInterval(() => {
+        axios.get(`http://api.askhim.ctrempe.fr:80/user/get-user-by-token/${this.guid}`)
+            .then(res => {
+              this.id = res.data.id
+              axios.get(`http://api.askhim.ctrempe.fr:80/chat/get-discussions-from-user-by-token/${this.guid}`)
+                  .then(res => {
+                    this.utilisateurs = []
+                    this.archiveUtilisateurs = []
+                    res.data.forEach(discussion => {
+                      if (discussion.service.state) {
+                        discussion.users.forEach(user => {
+                          if (user.id !== this.id) {
+                            this.utilisateurs.push({
+                              User: user,
+                              Uuid: discussion.uuid,
+                              Messages: discussion.messages,
+                              Service: discussion.service
+                            })
+                          }
+                        })
+                      } else {
+                        discussion.users.forEach(user => {
+                          if (user.id !== this.id) {
+                            this.archiveUtilisateurs.push({
+                              User: user,
+                              Uuid: discussion.uuid,
+                              Messages: discussion.messages,
+                              Service: discussion.service
+                            })
+                          }
+                        })
+
+                      }
+                    })
+                  })
+            })
+
+      }, 10000);
+      store.commit("setInterval2", interval2)
     }
-  },
+  }
+  ,
   mounted() {
     const token = this.$route.params.chatService
     axios.get(`http://api.askhim.ctrempe.fr:80/user/get-user-by-token/${this.guid}`)
@@ -292,30 +441,45 @@ export default {
           axios.get(`http://api.askhim.ctrempe.fr:80/chat/get-discussions-from-user-by-token/${this.guid}`)
               .then(res => {
                 res.data.forEach(discussion => {
-                  console.log(discussion)
-                  discussion.users.forEach(user => {
-                    if (user.id !== this.id) {
-                      this.utilisateurs.push({
-                        User: user,
-                        Uuid: discussion.uuid,
-                        Messages: discussion.messages,
-                        Service: discussion.service
-                      })
-                    }
-                  })
+                  if (discussion.service.state) {
+                    discussion.users.forEach(user => {
+                      if (user.id !== this.id) {
+                        this.utilisateurs.push({
+                          User: user,
+                          Uuid: discussion.uuid,
+                          Messages: discussion.messages,
+                          Service: discussion.service
+                        })
+                      }
+                    })
+                  } else {
+                    discussion.users.forEach(user => {
+                      if (user.id !== this.id) {
+                        this.archiveUtilisateurs.push({
+                          User: user,
+                          Uuid: discussion.uuid,
+                          Messages: discussion.messages,
+                          Service: discussion.service
+                        })
+                      }
+                    })
+
+                  }
                 })
               })
               .then(() => {
-                if(token != null || token != undefined){
+                if (token != null || token != undefined) {
                   this.utilisateurs.forEach(chat => {
-                    if(chat.Uuid === token){
+                    if (chat.Uuid === token) {
                       this.loadChat(chat)
                     }
                   })
                 }
+                this.reloadConv()
               })
         })
-  },
+  }
+  ,
   computed: {
     firstname() {
       return store.state.profile.firstname;

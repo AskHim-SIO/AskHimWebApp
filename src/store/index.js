@@ -21,12 +21,26 @@ export default new Vuex.Store({
         },
         guid: "",
         newMsg: false,
+        interval : "",
+        interval2 : ""
     },
 
     mutations:
         {
             setGuid(state, value) {
                 state.guid = value
+            },
+            setInterval(state, value) {
+                state.interval = value
+            },
+            unSetInterval(state) {
+                state.interval = ''
+            },
+            setInterval2(state, value) {
+                state.interval2 = value
+            },
+            unSetInterval2(state) {
+                state.interval2 = ''
             },
             setNewMsg(state) {
                 state.newMsg = true

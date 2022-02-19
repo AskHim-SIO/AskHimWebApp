@@ -16,7 +16,7 @@
               class="w-full border rounded-md pl-10 pr-4 py-2 focus:border-askHim-blue focus:outline-none focus:shadow-outline" placeholder="Recherche" type="text" @input="debounceSearch">
         </div>
         <div v-if="findServices != []"
-             class="relative max-w-lg mx-auto  text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
+             class="absolute z-50 inset-x-0 center-0 max-w-lg mx-auto  text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
           <ul class="py-1">
             <li v-for="findService in findServices" :key="findService.id" v-on:click="selectService(findService.id)"
                 class="cursor-pointer">

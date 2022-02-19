@@ -62,6 +62,9 @@ const routes = [
     path: '/rechercher/:type?',
     name: 'Research',
     component: () => import('../views/Research'),
+    meta:{
+      middleware: [checkGuid]
+    }
   },
   {
     path: '/profile',

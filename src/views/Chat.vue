@@ -1,9 +1,9 @@
 <template>
   <!-- component -->
-  <main class="my-8">
+  <main class="my-2 ">
     <div class="container mx-auto px-6">
       <div class="flex h-screen antialiased text-gray-800">
-        <div class="flex flex-row h-full w-full overflow-x-hidden">
+        <div class="flex flex-row h-auto w-full overflow-x-hidden">
           <div class="flex flex-col py-8 pl-6 pr-2 w-64 bg-white flex-shrink-0">
             <div class="flex flex-row items-center justify-center h-12 w-full">
               <div
@@ -94,13 +94,27 @@
 
           <!-- MESSAGES -->
 
-          <div class="flex flex-col flex-auto h-auto p-6">
-            <div
-                class="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full p-4"
-            >
-              <div class="flex flex-col h-full overflow-x-auto mb-4">
-                <div class="flex flex-col h-full">
+          <div class="flex flex-col flex-auto  p-20">
+
+            <div class="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-gray-100 h-full ">
+              <!-- profile picture-->
+              <div v-if="this.lastChat != null" class="w-full px-4 flex justify-center pt-5">
+                <div class="relative">
+                  <img alt="..." v-bind:src="lastChat.User.profilPicture"
+                       class="shadow-xl rounded-full h-auto align-middle border-none absolute -m-20 -ml-20 lg:-ml-16 max-w-100-px">
+                  <div class="ml-2 text-md font-semibold -mt-10 ml-10">{{ lastChat.User.firstname }} {{ lastChat.User.name }}</div>
+                </div>
+
+              </div>
+
+
+
+
+              <!-- messages -->
+              <div class="flex flex-col h-full overflow-x-auto mb-4 pt-5">
+                <div class="flex flex-col  h-full">
                   <div v-for="message in messages" v-bind:key="message.id" class="grid grid-cols-12 gap-y-2">
+                    <!-- messages reception -->
                     <div v-if="message.author.id !== id" class="col-start-1 col-end-8 p-3 rounded-lg">
                       <div class="flex flex-row items-center">
                         <div class="flex items-center justify-center h-10 w-10 rounded-full flex-shrink-0">
@@ -112,6 +126,8 @@
                         </div>
                       </div>
                     </div>
+
+                    <!-- messages envoyés -->
                     <div v-if="message.author.id === id" class="col-start-6 col-end-13 p-3 rounded-lg">
                       <div class="flex items-center justify-start flex-row-reverse">
                         <div class="flex items-center justify-center h-10 w-10 rounded-full flex-shrink-0">
@@ -123,6 +139,7 @@
                         </div>
                       </div>
                     </div>
+
                   </div>
                 </div>
               </div>
@@ -244,6 +261,7 @@ export default {
   },
   methods: {
     loadChat(chat) {
+      console.log(chat)
       this.lastChat = chat
       this.chatDisable = false
       axios.get(`http://api.askhim.ctrempe.fr:80/chat/get-discussion-by-id/${chat.Uuid}`)
@@ -274,6 +292,7 @@ export default {
           axios.get(`http://api.askhim.ctrempe.fr:80/chat/get-discussions-from-user-by-token/${this.guid}`)
               .then(res => {
                 res.data.forEach(discussion => {
+                  console.log(discussion)
                   discussion.users.forEach(user => {
                     if (user.id !== this.id) {
                       this.utilisateurs.push({

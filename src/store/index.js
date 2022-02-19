@@ -20,12 +20,19 @@ export default new Vuex.Store({
             isAdmin: ""
         },
         guid: "",
+        newMsg: false,
     },
 
     mutations:
         {
             setGuid(state, value) {
                 state.guid = value
+            },
+            setNewMsg(state) {
+                state.newMsg = true
+            },
+            unSetMsg(state) {
+                state.newMsg = false
             },
             login(state, values) {
                 state.profile.name = values.name

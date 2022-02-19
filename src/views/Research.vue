@@ -25,9 +25,10 @@
                   @change="countChange($event)">
                 <option value="5">5</option>
                 <option value="10">10</option>
-                <option value="25">25</option>
+                <option selected value="25">25</option>
                 <option value="50">50</option>
                 <option value="100">100</option>
+                <option value="200">200</option>
               </select>
               <div
                   class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -37,7 +38,8 @@
             <div class="relative">
               <select
                   v-model="select"
-                  class=" h-full  sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500" @change="selectChange($event)">
+                  class=" h-full border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500"
+                  @change="selectChange($event)">
                 <option value="Tout">Tout</option>
                 <option v-for="typeService in typeServices" v-bind:key="typeService.id" :value="typeService.libelle">
                   {{ typeService.libelle }}
@@ -210,13 +212,20 @@ export default {
               .get(`http://api.askhim.ctrempe.fr:80/service/search-services?query=${this.recherche}&count=${this.count}`)
               .then(response => {
                 this.services = []
+                let cpt = 0
                 response.data.forEach(service => {
                   if (this.select !== "Tout") {
                     if (service.type.libelle === this.select) {
-                      this.services.push(service)
+                      if (cpt < this.count) {
+                        this.services.push(service)
+                        cpt++
+                      }
                     }
                   } else {
-                    this.services = response.data
+                    if (cpt < this.count) {
+                      this.services.push(service)
+                      cpt++
+                    }
                   }
                 })
 
@@ -230,7 +239,7 @@ export default {
   },
   computed: {},
   mounted: function () {
-    if(this.$route.params.type !== undefined){
+    if (this.$route.params.type !== undefined) {
       this.select = this.$route.params.type
     }
     axios
@@ -241,7 +250,10 @@ export default {
       axios
           .get("http://api.askhim.ctrempe.fr:80/service/get-recent-services")
           .then(response => {
-            this.services = response.data
+            response.data.forEach(service => {
+                this.services.push(service)
+            })
+
           })
     } else {
       axios

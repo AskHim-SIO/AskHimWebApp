@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import isAuth from '../middleware/isAuth'
 import isNotAuth from '../middleware/isNotAuth'
 import checkGuid from '../middleware/checkGuid'
+import newMessage from '../middleware/newMessage'
 
 
 Vue.use(VueRouter)
@@ -14,7 +15,7 @@ const routes = [
     name: 'Home',
     component: Home,
     meta: {
-      middleware: [checkGuid],
+      middleware: [checkGuid, newMessage],
     },
   },
   {
@@ -22,7 +23,7 @@ const routes = [
     name: 'Home',
     component: () => import('../views/Home.vue'),
     meta: {
-      middleware: [checkGuid],
+      middleware: [checkGuid, newMessage],
     },
   },
   {

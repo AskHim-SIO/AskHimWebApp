@@ -38,8 +38,9 @@
                     class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                     id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
               <span class="sr-only">Ouvrir le menu</span>
-              <img class="w-8 h-8 rounded-full" v-bind:src="this.profilePicture"
+              <img class="relative w-8 h-8 rounded-full" v-bind:src="this.profilePicture"
                    alt="user photo">
+              <span class="absolute ml-5 -mt-2 px-2.5 py-0.5 bg-yellow-500 rounded-full text-xs">1</span>
             </button>
           </div>
 
@@ -52,15 +53,15 @@
                   class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">{{ this.firstname }}</span>
             </div>
             <ul class="py-1" aria-labelledby="dropdown">
-              <router-link to="/profile"><li><a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Mon profil</a></li></router-link>
+              <router-link to="/profile"><li><a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Mon profil </a></li></router-link>
               <router-link to="/chat"><li>
                 <a href="#"
                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Mes messages</a>
               </li></router-link>
-              <router-link to="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><li v-if="this.isAdmin">
-                <a href="http://localhost:8080/"
+              <li v-if="this.isAdmin">
+                <a href="http://localhost:8081/"
                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Pannel admin</a>
-              </li></router-link>
+              </li>
               <li>
                 <a href="/" v-on:click="deconnexion"
                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Se deconnecter</a>

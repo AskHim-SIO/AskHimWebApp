@@ -227,10 +227,10 @@
 
                   </div>
                   <button v-if="estAuteur"
-                          class="flex items-center justify-center bg-green-500 hover:bg-green-600 rounded-full text-white px-4 py-1 flex-shrink-0 ml-2"
+                          class="flex items-center justify-center bg-red-500 hover:bg-red-600 rounded-full text-white px-4 py-1 flex-shrink-0 ml-2"
                           v-on:click="finaliser()"
                   >
-                    <span>Valider</span>
+                    <span>Clôturer le service</span>
                     <span class="ml-2">
                     <svg
                         class="w-4 h-4 transform rotate-45 -mt-px"

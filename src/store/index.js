@@ -20,7 +20,10 @@ export default new Vuex.Store({
             isAdmin: ""
         },
         guid: "",
-        newMsg: false,
+        msg: {
+            newMsg: false,
+            nbMsg : 0
+        },
         interval : "",
         interval2 : ""
     },
@@ -42,11 +45,11 @@ export default new Vuex.Store({
             unSetInterval2(state) {
                 state.interval2 = ''
             },
-            setNewMsg(state) {
-                state.newMsg = true
+            setNewMsg(state, value) {
+                state.msg.newMsg = value
             },
-            unSetMsg(state) {
-                state.newMsg = false
+            setNbMsg(state, value) {
+                state.msg.nbMsg = value
             },
             login(state, values) {
                 state.profile.name = values.name

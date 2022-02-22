@@ -24,7 +24,7 @@
             </div>
             <div class="p-4">
               <p class="mb-4 italic">Description : {{ service.description }}</p>
-              <p class="mb-4 italic">De : {{ user.firstname }} {{ user.name }}</p>
+              <p v-on:click="goProfil" class="cursor-pointer mb-4 italic">De : {{ user.firstname }} {{ user.name }}</p>
               <p v-if="dateStart !== dateEnd" class="mb-4 italic">Du : {{ dateStart }} au {{ dateEnd }}</p>
               <p v-else class="mb-4 italic">Le : {{ dateStart }}</p>
               <p class="mb-4 italic">Salaire : {{ service.price }} €</p>
@@ -169,13 +169,18 @@ export default {
       axios
           .post(`http://api.askhim.ctrempe.fr/chat/init-discussion?serviceId=${this.id}&userToken=${store.state.guid}`)
           .then((res) => {
-            console.log(res.data)
             this.$router.push({
               name: 'Chat',
               params: { chatService: res.data }
             });
 
           })
+    },
+    goProfil(){
+      this.$router.push({
+        name: 'Profile',
+        params: { id: this.user.id }
+      });
     }
   },
   mounted() {

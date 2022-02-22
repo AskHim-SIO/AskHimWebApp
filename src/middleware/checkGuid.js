@@ -26,15 +26,27 @@ export default ({next}) => {
                     fetch(urlGetUser)
                         .then(response2 => response2.json())
                         .then(repos2 => {
-                            store.commit('login', {
-                                firstname: repos2.firstname,
-                                name: repos2.name,
-                                profilePicture: repos2.profilPicture,
-                                isAdmin: repos2.admin,
-                            })
-                            next()
-                        })
+                            console.log(repos2)
+                            if(repos2.id) {
+                                console.log("if")
+                                store.commit('login', {
+                                    firstname: repos2.firstname,
+                                    name: repos2.name,
+                                    profilePicture: repos2.profilPicture,
+                                    isAdmin: repos2.admin,
+                                })
+                                next()
+                            }
+                            else{
+                                console.log("else")
+                                store.commit("logOut")
+                                next({
+                                    path: '/se-connecter',
+                                    replace: true
+                                })
+                            }
 
+                        })
                 } else {
                     store.commit('logOut')
                     next({
@@ -44,6 +56,7 @@ export default ({next}) => {
                 }
 
             })
+
 
     }
 }

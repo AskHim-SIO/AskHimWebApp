@@ -40,7 +40,7 @@
               <span class="sr-only">Ouvrir le menu</span>
               <img class="relative w-8 h-8 rounded-full" v-bind:src="this.profilePicture"
                    alt="user photo">
-              <span class="absolute ml-5 -mt-2 px-2.5 py-0.5 bg-yellow-500 rounded-full text-xs">1</span>
+              <span v-if="newMsg" class="absolute ml-5 -mt-2 px-2.5 py-0.5 bg-yellow-500 rounded-full text-xs">{{ nbMsg }}</span>
             </button>
           </div>
 
@@ -56,7 +56,7 @@
               <router-link to="/profile"><li><a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Mon profil </a></li></router-link>
               <router-link to="/chat"><li>
                 <a href="#"
-                   class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Mes messages</a>
+                   class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Mes messages <span v-if="newMsg" class="ml-5 -mt-2 px-2.5 py-0.5 bg-yellow-500 rounded-full text-xs">!</span></a>
               </li></router-link>
               <li v-if="this.isAdmin">
                 <a href="http://localhost:8081/"
@@ -141,6 +141,12 @@ export default {
     },
     guid(){
       return store.state.guid;
+    },
+    newMsg(){
+      return store.state.msg.newMsg;
+    },
+    nbMsg(){
+      return store.state.msg.nbMsg;
     }
   },
 

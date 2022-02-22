@@ -67,7 +67,7 @@ const routes = [
     }
   },
   {
-    path: '/profile',
+    path: '/profile/:id?',
     name: 'Profile',
     component: () => import('../views/Profile.vue'),
     meta: {
@@ -75,7 +75,7 @@ const routes = [
     },
   },
   {
-    path: '/profile/update',
+    path: '/modifier-profil',
     name: 'ProfileUpdate',
     component: () => import('../views/ProfileUpdate.vue'),
     meta: {

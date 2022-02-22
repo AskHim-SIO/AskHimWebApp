@@ -321,6 +321,8 @@ export default {
             this.lastChat = chat
           })
 
+      axios.put(`http://api.askhim.ctrempe.fr:80/chat/read-messages?discussionId=${chat.Uuid}&userToken=${this.guid}`)
+
       this.chatDisable = false
 
       const intervalName = setInterval(() => {

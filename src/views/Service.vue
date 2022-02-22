@@ -24,11 +24,12 @@
             </div>
             <div class="p-4">
               <p class="mb-4 italic">Description : {{ service.description }}</p>
-              <p v-on:click="goProfil" class="cursor-pointer mb-4 italic">De : {{ user.firstname }} {{ user.name }}</p>
+              <p class="cursor-pointer mb-4 italic" v-on:click="goProfil">De : {{ user.firstname }} {{ user.name }}</p>
               <p v-if="dateStart !== dateEnd" class="mb-4 italic">Du : {{ dateStart }} au {{ dateEnd }}</p>
               <p v-else class="mb-4 italic">Le : {{ dateStart }}</p>
-              <p class="mb-4 italic">Salaire : {{ service.price }} €</p>
-              <p v-if="type.libelle !== 'Transport'" class="mb-4 italic">Adresse : {{lieu.adresse}} - {{ lieu.ville }} - {{lieu.codePostal}} </p>
+              <p class="mb-4 italic">Rémunération : {{ service.price }} AskCoins</p>
+              <p v-if="type.libelle !== 'Transport'" class="mb-4 italic">Adresse : {{ lieu.adresse }} - {{ lieu.ville }}
+                - {{ lieu.codePostal }} </p>
             </div>
 
             <div v-if="type.libelle === 'Transport'">
@@ -74,10 +75,11 @@
                 <h1 class="ml-2 font-bold uppercase">Catégorie : {{ type.libelle }}</h1>
               </div>
               <div class="p-4">
-                <p v-if="service.nbPersonne === 0 || service.nbPersonne === 1" class="mb-4 italic">Nombre de personnes : {{ service.nbPersonne }} personne</p>
+                <p v-if="service.nbPersonne === 0 || service.nbPersonne === 1" class="mb-4 italic">Nombre de personnes :
+                  {{ service.nbPersonne }} personne</p>
                 <p v-else class="mb-4 italic">Nombre de personnes : {{ service.nbPersonne }} personnes</p>
                 <p class="mb-4 italic">Jeu : {{ service.jeu }}</p>
-                <p  v-if="service.animal" class="mb-4 italic">Animal : Oui</p>
+                <p v-if="service.animal" class="mb-4 italic">Animal : Oui</p>
                 <p v-else class="mb-4 italic">Animal : Non</p>
               </div>
             </div>
@@ -85,21 +87,21 @@
               <div class="p-4 mt-6 bg-gray-100 rounded-full">
                 <h1 class="ml-2 font-bold uppercase">Catégorie : {{ type.libelle }}</h1>
               </div>
-                <p class="pt-2 mb-4 italic">Tâche à faire : {{ service.libelle }}</p>
-                <p v-if="service.nbHeure === 0 || service.nbHeure === 1" class="mb-4 italic">1 heure requise</p>
-                <p v-else class="mb-4 italic">Nombres d'heures requises : {{ service.nbHeure }}</p>
-                <p class="mb-4 italic">Matériel :</p>
-                <ul class="border ml-4">
-                  <li>
-                    {{ service.materiel }}
-                  </li>
-                </ul>
+              <p class="pt-2 mb-4 italic">Tâche à faire : {{ service.libelle }}</p>
+              <p v-if="service.nbHeure === 0 || service.nbHeure === 1" class="mb-4 italic">1 heure requise</p>
+              <p v-else class="mb-4 italic">Nombres d'heures requises : {{ service.nbHeure }}</p>
+              <p class="mb-4 italic">Matériel :</p>
+              <ul class="border ml-4">
+                <li>
+                  {{ service.materiel }}
+                </li>
+              </ul>
             </div>
           </div>
 
           <div class="lg:px-2 lg:w-1/2">
             <div class="p-4 bg-gray-100 rounded-full">
-              <h1 class="ml-2 font-bold uppercase">Order Details</h1>
+              <h1 class="ml-2 font-bold uppercase">Localisation :</h1>
             </div>
             <div class="mt-2">
               <template>
@@ -110,9 +112,11 @@
                 </l-map>
               </template>
               <a href="#">
-                <button :disabled='isDisabled'
-                        class="flex justify-center w-full px-10 py-3 mt-6 font-medium text-white uppercase bg-gray-800 rounded-full shadow item-center hover:bg-gray-700 focus:shadow-outline focus:outline-none"
-                        v-on:click="initMessage">
+                <button
+                    v-if="guid"
+                    :disabled='isDisabled'
+                    class="flex justify-center w-full px-10 py-3 mt-6 font-medium text-white uppercase bg-gray-800 rounded-full shadow item-center hover:bg-gray-700 focus:shadow-outline focus:outline-none"
+                    v-on:click="initMessage">
                   <svg aria-hidden="true" class="iconify iconify--ic" height="32"
                        preserveAspectRatio="xMidYMid meet" role="img" viewBox="0 0 24 24" width="32"
                        xmlns="http://www.w3.org/2000/svg"
@@ -171,15 +175,15 @@ export default {
           .then((res) => {
             this.$router.push({
               name: 'Chat',
-              params: { chatService: res.data }
+              params: {chatService: res.data}
             });
 
           })
     },
-    goProfil(){
+    goProfil() {
       this.$router.push({
         name: 'Profile',
-        params: { id: this.user.id }
+        params: {id: this.user.id}
       });
     }
   },
@@ -243,13 +247,18 @@ export default {
                 res.data.forEach(service => {
                   if (service.id == this.id) {
                     this.isDisabled = true,
-                    this.buttonValue = "Ce service est à vous"
+                        this.buttonValue = "Ce service est à vous"
                   }
                 })
               })
         })
 
 
+  },
+  computed: {
+    guid() {
+      return store.state.guid
+    }
   }
 }
 </script>

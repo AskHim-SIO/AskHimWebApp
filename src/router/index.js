@@ -31,7 +31,7 @@ const routes = [
     name: 'Service',
     component: () => import('../views/Service.vue'),
     meta: {
-      middleware: [ checkGuid, isNotAuth],
+      middleware: [ checkGuid ],
     },
   },
   {

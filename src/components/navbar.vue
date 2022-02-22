@@ -149,6 +149,9 @@ export default {
       return store.state.msg.nbMsg;
     }
   },
+  mounted() {
+
+  }
 
 
 }

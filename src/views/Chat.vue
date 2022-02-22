@@ -284,7 +284,6 @@ export default {
       axios.put(`http://api.askhim.ctrempe.fr:80/service/validate-service?serviceId=${this.lastChat.Service.id}&userId=${this.id}`)
           .then((res) => {
             if (res.data.success) {
-              console.log("yoyo")
               clearInterval(store.state.interval)
               store.commit('unSetInterval')
 

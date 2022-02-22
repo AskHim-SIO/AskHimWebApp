@@ -164,7 +164,6 @@ export default {
 
         axios.post('http://api.askhim.ctrempe.fr:80/user/create-user', this.form)
             .then((res) => {
-              console.log(this.form.dateNaiss)
               if (res.status === 201) {
                 axios.post('http://api.askhim.ctrempe.fr:80/auth/login', this.form)
                     .then((res) => {

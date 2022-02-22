@@ -25,7 +25,6 @@ export default {
   },
   methods: {
     handleImages(files) {
-      console.log(files)
       this.$emit('sendImages', {images: files})
     }
   }

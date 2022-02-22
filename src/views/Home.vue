@@ -13,16 +13,17 @@
                         </span>
           <input
               v-model="recherche"
-              class="w-full border rounded-md pl-10 pr-4 py-2 focus:border-askHim-blue focus:outline-none focus:shadow-outline" placeholder="Recherche" type="text" @input="debounceSearch">
+              class="w-full border rounded-md pl-10 pr-4 py-2 focus:border-askHim-blue focus:outline-none focus:shadow-outline"
+              placeholder="Recherche" type="text" @input="debounceSearch">
         </div>
         <div v-if="findServices != []"
              class="absolute z-50 inset-x-0 center-0 max-w-lg mx-auto  text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
           <ul class="py-1">
-            <li v-for="findService in findServices" :key="findService.id" v-on:click="selectService(findService.id)"
-                class="cursor-pointer">
+            <li v-for="findService in findServices" :key="findService.id" class="cursor-pointer"
+                v-on:click="selectService(findService.id)">
               <p
                   class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                <span class="font-bold">{{findService.type.libelle}}</span> - {{findService.name}}</p>
+                <span class="font-bold">{{ findService.type.libelle }}</span> - {{ findService.name }}</p>
             </li>
           </ul>
         </div>
@@ -35,7 +36,8 @@
           <div class="bg-gray-900 bg-opacity-50 flex items-center h-full">
             <div class="px-10 max-w-xl">
               <h2 class="text-2xl text-white font-semibold">Besoin d'aide ? AskHim !</h2>
-              <p class="mt-2 text-gray-400">Si tu as besoins d'un dépannage, poste ton service, quelqu'un viendra à ton secours !</p>
+              <p class="mt-2 text-gray-400">Si tu as besoins d'un dépannage, poste ton service, quelqu'un viendra à ton
+                secours !</p>
             </div>
           </div>
         </div>
@@ -120,14 +122,25 @@ export default {
     debounceSearch() {
       clearTimeout(this.debounce)
       this.debounce = setTimeout(() => {
-        axios
-            .get(`http://api.askhim.ctrempe.fr:80/service/search-services?query=${this.recherche}&count=10`)
-            .then(response => {
-              this.findServices = response.data
-            })
+        if (this.recherche !== "") {
+          let cpt = 0
+          axios
+              .get(`http://api.askhim.ctrempe.fr:80/service/search-services?query=${this.recherche}&count=10`)
+              .then(response => {
+                response.data.forEach(reponse => {
+                  if(cpt <= 5){
+                    this.findServices.push(reponse)
+                    cpt++
+                  }
+                })
+              })
+        }
+        else{
+          this.findServices = []
+        }
       }, 600)
     },
-    selectService(service){
+    selectService(service) {
       router.push({name: 'Service', params: {id: service}})
     }
   },

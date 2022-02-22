@@ -133,9 +133,6 @@ export default {
                     router.push({name: 'Profile'})
                   }
                 })
-                .catch(function (error) {
-                  console.log(error);
-                });
           })
 
       e.preventDefault();

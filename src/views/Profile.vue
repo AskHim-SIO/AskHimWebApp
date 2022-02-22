@@ -8,11 +8,12 @@
             <div class="px-6">
               <div class="flex flex-wrap justify-center">
                 <div class="w-full p-5 px-4 flex justify-center">
-                  <div class="relative">
+                  <div class="w-10 h-10 rounded-full">
                     <img alt="..."
                          class="absolute shadow-xl  rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
                          v-bind:src="this.user.profilPicture">
                   </div>
+
                 </div>
                 <div class="w-full px-4 text-center  mt-20">
                   <h3 class="text-xl font-semibold leading-normal mt-4 text-blueGray-700 mb-2">

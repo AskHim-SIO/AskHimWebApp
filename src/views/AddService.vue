@@ -553,6 +553,7 @@ export default {
       this.images = payload.images
     },
     checkForm: function (e) {
+      let today;
       this.errors = [];
       if (this.selected != "Choisir une catégorie") {
 
@@ -620,7 +621,26 @@ export default {
 
       if (!this.dateStart) {
         this.errors.push("il n'y a pas de date de départ");
+
       }
+      else{
+        today = new Date();
+        if(this.dateStart < today){
+          this.errors.push("Le service ne peut se passer avant ce jour");
+        }
+      }
+
+      if (this.plusieurJoursBool) {
+        if(!this.dateEnd){
+          this.errors.push("il n'y a pas de date de fin du service");
+        }
+        else{
+          if(this.dateEnd <= this.dateStart){
+            this.errors.push("La date de fin ne peut être avant ou le même jour que le début");
+          }
+        }
+      }
+
       if (!this.description) {
         this.errors.push("Il n'y a pas de description");
       }
@@ -679,8 +699,6 @@ export default {
                           }
                       ))
                   Promise.all(arr).then(() => {
-                    console.log("L'ensemble des appels ajax sont terminés.")
-
                     router.push({name: 'Service', params: {id: res.data}})
                   })
                 } else {
@@ -715,8 +733,6 @@ export default {
                           }
                       ))
                   Promise.all(arr).then(() => {
-                    console.log("L'ensemble des appels ajax sont terminés.")
-
                     router.push({name: 'Service', params: {id: res.data}})
                   })
                 } else {
@@ -775,7 +791,6 @@ export default {
           this.addCourse.lieuVille = this.lieuVille
           this.addCourse.name = this.name
           this.addCourse.price = this.price
-          console.log(this.addCourse)
 
           axios.post('http://api.askhim.ctrempe.fr/service/create-course-service', this.addCourse)
               .then((res) => {
@@ -824,8 +839,6 @@ export default {
                           }
                       ))
                   Promise.all(arr).then(() => {
-                    console.log("L'ensemble des appels ajax sont terminés.")
-
                     router.push({name: 'Service', params: {id: res.data}})
                   })
                 } else {

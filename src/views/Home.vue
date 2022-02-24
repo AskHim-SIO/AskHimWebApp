@@ -59,7 +59,7 @@
                 <h2 class="text-2xl text-white font-semibold">Ask<span
                     class="text-askHim-blue">Him</span> sur ton mobile !</h2>
                 <p class="mt-2 text-gray-400">Toujours avec vous même dans vos poches. <span
-                    class="text-askHim-blue">L'application</span> vous permet de contnuer
+                    class="text-askHim-blue">L'application</span> vous permet de continuer
                   l'aventure
                   peu importe ou vous vous situez.</p>
                 <button

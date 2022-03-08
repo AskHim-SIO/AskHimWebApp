@@ -115,10 +115,10 @@
                 <div class="flex flex-wrap justify-center">
                   <div class="w-full lg:w-9/12 px-4">
                     <service-container v-if="!paramGuid"
-                        v-bind:api="'http://api.askhim.ctrempe.fr:80/service/get-services-from-user-by-token/'+guid"
+                        v-bind:api="'https://api.askhim.ctrempe.fr/service/get-services-from-user-by-token/'+guid"
                         v-bind:title="'Vos services'"></service-container>
                     <service-container v-else
-                                       v-bind:api="'http://api.askhim.ctrempe.fr:80/service/get-services-from-user-by-id/'+paramGuid"
+                                       v-bind:api="'https://api.askhim.ctrempe.fr/service/get-services-from-user-by-id/'+paramGuid"
                                        v-bind:title="'Vos services'"></service-container>
                     <div class="flex justify-center">
                       <div class="pt-2">
@@ -191,7 +191,7 @@ export default {
   mounted() {
     if(this.paramGuid){
       axios
-          .get(`http://api.askhim.ctrempe.fr:80/user/get-user-by-id/${this.paramGuid}`)
+          .get(`https://api.askhim.ctrempe.fr/user/get-user-by-id/${this.paramGuid}`)
           .then(response => {
             this.user = response.data
           })
@@ -202,12 +202,12 @@ export default {
     }
     else{
       axios
-          .get(`http://api.askhim.ctrempe.fr:80/user/get-user-by-token/${this.guid}`)
+          .get(`https://api.askhim.ctrempe.fr/user/get-user-by-token/${this.guid}`)
           .then(response => (this.user = response.data))
     }
 
     axios
-        .get("http://api.askhim.ctrempe.fr:80/type/get-types")
+        .get("https://api.askhim.ctrempe.fr/type/get-types")
         .then(response => (this.typeServices = response.data))
 
 

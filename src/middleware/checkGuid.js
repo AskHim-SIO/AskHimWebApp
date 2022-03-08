@@ -16,8 +16,8 @@ export default ({next}) => {
         }
 
         const guid = store.state.guid
-        const urlTokenValid = 'http://api.askhim.ctrempe.fr:80/auth/token-valid?request=' + guid;
-        const urlGetUser = 'http://api.askhim.ctrempe.fr:80/user/get-user-by-token/' + guid;
+        const urlTokenValid = 'https://api.askhim.ctrempe.fr/auth/token-valid?request=' + guid;
+        const urlGetUser = 'https://api.askhim.ctrempe.fr/user/get-user-by-token/' + guid;
 
         fetch(urlTokenValid)
             .then(response => response.json())

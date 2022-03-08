@@ -101,7 +101,7 @@ export default {
         this.form.email = this.email;
         this.form.password = this.password;
 
-        axios.post('http://api.askhim.ctrempe.fr:80/auth/login', this.form)
+        axios.post('https://api.askhim.ctrempe.fr/auth/login', this.form)
             .then((res)=>{
               if(res.status === 200){
                 store.commit("setGuid", res.data);

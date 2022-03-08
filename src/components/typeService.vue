@@ -33,7 +33,7 @@ export default {
   },
   mounted() {
     axios
-        .get('http://api.askhim.ctrempe.fr/type/get-types')
+        .get('https://api.askhim.ctrempe.fr/type/get-types')
         .then(response => (this.categories = response.data))
   }
 }

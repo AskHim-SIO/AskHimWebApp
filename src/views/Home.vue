@@ -78,12 +78,12 @@
         </div>
         <!-- -- Affichage des services recents -- -->
         <div>
-          <service-container api="http://api.askhim.ctrempe.fr:80/service/get-recent-services"
+          <service-container api="https://api.askhim.ctrempe.fr/service/get-recent-services"
                              title="Service récents"></service-container>
         </div>
 
         <div v-for="categorie in categories" v-bind:key="categorie.id">
-          <service-container v-bind:api="'http://api.askhim.ctrempe.fr:80/service/get-services-from-type/'+categorie.id"
+          <service-container v-bind:api="'https://api.askhim.ctrempe.fr/service/get-services-from-type/'+categorie.id"
                              v-bind:title="categorie.libelle"></service-container>
         </div>
 
@@ -115,7 +115,7 @@ export default {
   },
   mounted() {
     axios
-        .get('http://api.askhim.ctrempe.fr/type/get-types')
+        .get('https://api.askhim.ctrempe.fr/type/get-types')
         .then(response => (this.categories = response.data))
   },
   methods: {
@@ -125,7 +125,7 @@ export default {
         if (this.recherche !== "") {
           let cpt = 0
           axios
-              .get(`http://api.askhim.ctrempe.fr:80/service/search-services?query=${this.recherche}&count=10`)
+              .get(`https://api.askhim.ctrempe.fr/service/search-services?query=${this.recherche}&count=10`)
               .then(response => {
                 response.data.forEach(reponse => {
                   if(cpt <= 5){

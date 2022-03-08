@@ -64,7 +64,7 @@
                   peu importe ou vous vous situez.</p>
                 <button
                     class="flex items-center mt-4 text-white text-sm uppercase font-medium rounded hover:underline focus:outline-none">
-                  <a href="http://cdn.askhim.ctrempe.fr/AskHim.apk"><span>Télécharger l'application !</span></a>
+                  <a href="https://cdn.askhim.ctrempe.fr/AskHim.apk"><span>Télécharger l'application !</span></a>
                 </button>
               </div>
             </div>

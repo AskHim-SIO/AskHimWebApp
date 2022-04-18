@@ -1,24 +1,37 @@
-# ap_askhim_webapp
 
-## Project setup
-```
-npm install
-```
+# AskHim
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Besoin d'aide ? Ask him ! Proposez ou resolvez des services ! 
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Authors
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- [@Malcomle - Malcom Morel](https://github.com/Malcomle)
+
+
+## Demo
+
+Accéder au site : https://askhim.ctrempe.fr/
+
+
+
+## Features
+
+- Ajouter / consulter un service
+- Gestion de profil 
+- Chat entre utilisateurs
+
+
+![Logo](https://cdn.askhim.ctrempe.fr/logo-black.png)
+
+
+## Screenshots
+
+Home :
+![App Screenshot](https://zupimages.net/up/22/16/zajo.png)
+Service : 
+![App Screenshot](https://zupimages.net/up/22/16/xr1n.png)
+Chat : 
+![App Screenshot](https://zupimages.net/up/22/16/xwv8.png)
+
+

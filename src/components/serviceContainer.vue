@@ -33,7 +33,7 @@
       <div class="flex flex-col mt-5">
         <div ref="container" class="flex overflow-x-hidden overflow-y-hidden snap-x snap-mandatory">
           <div v-for="service in services" :key="service.id"
-               class="p-4 rounded-xl hover:scale-105 duration-500 transform transition cursor-pointer">
+               class="p-4 min-width-2 rounded-xl  hover:scale-105 duration-500 transform transition cursor-pointer">
             <!-- Tag Discount -->
 
 

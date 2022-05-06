@@ -64,7 +64,7 @@
                   peu importe ou vous vous situez.</p>
                 <button
                     class="flex items-center mt-4 text-white text-sm uppercase font-medium rounded hover:underline focus:outline-none">
-                  <a href="http://cdn.askhim.ctrempe.fr/AskHim.apk"><span>Télécharger l'application !</span></a>
+                  <a href="http://192.168.10.11/cdn/AskHim.apk"><span>Télécharger l'application !</span></a>
                 </button>
               </div>
             </div>
@@ -78,12 +78,12 @@
         </div>
         <!-- -- Affichage des services recents -- -->
         <div>
-          <service-container api="http://api.askhim.ctrempe.fr:80/service/get-recent-services"
+          <service-container api="http://192.168.50.11:4001/service/get-recent-services"
                              title="Service récents"></service-container>
         </div>
 
         <div v-for="categorie in categories" v-bind:key="categorie.id">
-          <service-container v-bind:api="'http://api.askhim.ctrempe.fr:80/service/get-services-from-type/'+categorie.id"
+          <service-container v-bind:api="'http://192.168.50.11:4001/service/get-services-from-type/'+categorie.id"
                              v-bind:title="categorie.libelle"></service-container>
         </div>
 
@@ -115,7 +115,7 @@ export default {
   },
   mounted() {
     axios
-        .get('http://api.askhim.ctrempe.fr/type/get-types')
+        .get('http://192.168.50.11:4001/type/get-types')
         .then(response => (this.categories = response.data))
   },
   methods: {
@@ -125,7 +125,7 @@ export default {
         if (this.recherche !== "") {
           let cpt = 0
           axios
-              .get(`http://api.askhim.ctrempe.fr:80/service/search-services?query=${this.recherche}&count=10`)
+              .get(`http://192.168.50.11:4001/service/search-services?query=${this.recherche}&count=10`)
               .then(response => {
                 response.data.forEach(reponse => {
                   if(cpt <= 5){

@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen md:flex">
-    <div class="flex md:w-1/2 bg-[url('http://cdn.askhim.ctrempe.fr/poigne.png')] bg-cover  i justify-around items-center">
+    <div class="flex md:w-1/2 bg-[url('http://192.168.10.11/cdn/poigne.png')] bg-cover  i justify-around items-center">
       <div>
         <h1 class="text-white font-bold text-4xl font-sans">AskHim</h1>
         <p class="text-white mt-1">Vous souhaitez consulter vos services sur téléphone ?</p>
@@ -162,10 +162,10 @@ export default {
         this.form.name = this.name;
         this.form.password = this.password;
 
-        axios.post('http://api.askhim.ctrempe.fr:80/user/create-user', this.form)
+        axios.post('http://192.168.50.11:4001/user/create-user', this.form)
             .then((res) => {
               if (res.status === 201) {
-                axios.post('http://api.askhim.ctrempe.fr:80/auth/login', this.form)
+                axios.post('http://192.168.50.11:4001/auth/login', this.form)
                     .then((res) => {
                       if (res.status === 200) {
                         store.commit("setGuid", res.data)

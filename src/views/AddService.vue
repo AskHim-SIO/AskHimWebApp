@@ -688,14 +688,14 @@ export default {
           //   responseType: 'text'
           // };
 
-          axios.post('http://api.askhim.ctrempe.fr:80/service/create-transport-service', this.addTransport)
+          axios.post('http://192.168.50.11:4001/service/create-transport-service', this.addTransport)
               .then((res) => {
 
                 if (this.images) {
                   const arr = this.images.map(file => readFile(file)
                       .then(contenu => {
                             this.jsonImg.fileStr = contenu
-                            axios.post(`http://api.askhim.ctrempe.fr:80/photo/save-photo-to-service?serviceId=${res.data}`, this.jsonImg)
+                            axios.post(`http://192.168.50.11:4001/photo/save-photo-to-service?serviceId=${res.data}`, this.jsonImg)
                           }
                       ))
                   Promise.all(arr).then(() => {
@@ -722,14 +722,14 @@ export default {
           this.addFormation.price = this.price
 
           console.log(this.addFormation)
-          axios.post('http://api.askhim.ctrempe.fr:80/service/create-formation-service', this.addFormation)
+          axios.post('http://192.168.50.11:4001/service/create-formation-service', this.addFormation)
               .then((res) => {
 
                 if (this.images) {
                   const arr = this.images.map(file => readFile(file)
                       .then(contenu => {
                             this.jsonImg.fileStr = contenu
-                            axios.post(`http://api.askhim.ctrempe.fr:80/photo/save-photo-to-service?serviceId=${res.data}`, this.jsonImg)
+                            axios.post(`http://192.168.50.11:4001/photo/save-photo-to-service?serviceId=${res.data}`, this.jsonImg)
                           }
                       ))
                   Promise.all(arr).then(() => {
@@ -756,14 +756,14 @@ export default {
           this.addLoisir.name = this.name
           this.addLoisir.price = this.price
 
-          axios.post('http://api.askhim.ctrempe.fr:80/service/create-loisir-service', this.addLoisir)
+          axios.post('http://192.168.50.11:4001/service/create-loisir-service', this.addLoisir)
               .then((res) => {
 
                 if (this.images) {
                   const arr = this.images.map(file => readFile(file)
                       .then(contenu => {
                             this.jsonImg.fileStr = contenu
-                            axios.post(`http://api.askhim.ctrempe.fr:80/photo/save-photo-to-service?serviceId=${res.data}`, this.jsonImg)
+                            axios.post(`http://192.168.50.11:4001/photo/save-photo-to-service?serviceId=${res.data}`, this.jsonImg)
                           }
                       ))
                   Promise.all(arr).then(() => {
@@ -792,14 +792,14 @@ export default {
           this.addCourse.name = this.name
           this.addCourse.price = this.price
 
-          axios.post('http://api.askhim.ctrempe.fr/service/create-course-service', this.addCourse)
+          axios.post('http://192.168.50.11:4001/service/create-course-service', this.addCourse)
               .then((res) => {
 
                 if (this.images) {
                   const arr = this.images.map(file => readFile(file)
                       .then(contenu => {
                             this.jsonImg.fileStr = contenu
-                            axios.post(`http://api.askhim.ctrempe.fr/photo/save-photo-to-service?serviceId=${res.data}`, this.jsonImg)
+                            axios.post(`http://192.168.50.11:4001/photo/save-photo-to-service?serviceId=${res.data}`, this.jsonImg)
                           }
                       ))
                   Promise.all(arr).then(() => {
@@ -828,14 +828,14 @@ export default {
           this.addTacheMenagere.name = this.name
           this.addTacheMenagere.price = this.price
 
-          axios.post('http://api.askhim.ctrempe.fr/service/create-tachemenagere-service', this.addTacheMenagere)
+          axios.post('http://192.168.50.11:4001/service/create-tachemenagere-service', this.addTacheMenagere)
               .then((res) => {
 
                 if (this.images) {
                   const arr = this.images.map(file => readFile(file)
                       .then(contenu => {
                             this.jsonImg.fileStr = contenu
-                            axios.post(`http://api.askhim.ctrempe.fr/photo/save-photo-to-service?serviceId=${res.data}`, this.jsonImg)
+                            axios.post(`http://192.168.50.11:4001/photo/save-photo-to-service?serviceId=${res.data}`, this.jsonImg)
                           }
                       ))
                   Promise.all(arr).then(() => {
@@ -942,10 +942,10 @@ export default {
   },
   mounted() {
     axios
-        .get('http://api.askhim.ctrempe.fr/type/get-types')
+        .get('http://192.168.50.11:4001/type/get-types')
         .then(response => (this.types = response.data))
 
-    axios.get(`http://api.askhim.ctrempe.fr:80/user/get-user-by-token/${store.state.guid}`)
+    axios.get(`http://192.168.50.11:4001/user/get-user-by-token/${store.state.guid}`)
         .then(res => {
 
           console.log(res.data.credit)

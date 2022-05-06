@@ -40,7 +40,7 @@
                     v-else
                     alt="Avatar"
                     class="h-full w-full"
-                    src="http://cdn.askhim.ctrempe.fr/userPicture.png"
+                    src="http://192.168.10.11/cdn/userPicture.png"
                 />
               </div>
               <div class="text-sm font-semibold mt-2">{{ firstname }} {{ name }}</div>
@@ -131,7 +131,7 @@
                 <div class="flex flex-col  h-full">
                   <div v-for="message in messages" v-bind:key="message.id" class="grid grid-cols-12 gap-y-2">
                     <!-- messages reception -->
-                    <div v-if="message.author.id !== id" class="col-start-1 col-end-8 p-3 rounded-lg">
+                    <div v-on:click="goProfil(message.author.id)" v-if="message.author.id !== id" class="col-start-1 mouse-pointer col-end-8 p-3 rounded-lg">
                       <div class="flex flex-row items-center">
                         <div class="flex items-center justify-center h-10 w-10 rounded-full flex-shrink-0">
                           <img alt="user photo" class="w-8 h-8 rounded-full"
@@ -280,8 +280,14 @@ export default {
     }
   },
   methods: {
+    goProfil(value) {
+      this.$router.push({
+        name: 'Profile',
+        params: {id: value}
+      });
+    },
     finaliser() {
-      axios.put(`http://api.askhim.ctrempe.fr:80/service/validate-service?serviceId=${this.lastChat.Service.id}&userId=${this.id}`)
+      axios.put(`http://192.168.50.11:4001/service/validate-service?serviceId=${this.lastChat.Service.id}&userId=${this.id}`)
           .then((res) => {
             if (res.data.success) {
               clearInterval(store.state.interval)
@@ -300,7 +306,7 @@ export default {
     loadChat(chat) {
       this.estAuteur = false;
       this.serviceId = chat.Service.id
-      axios.get(`http://api.askhim.ctrempe.fr:80/service/get-services-from-user-by-token/${this.guid}`)
+      axios.get(`http://192.168.50.11:4001/service/get-services-from-user-by-token/${this.guid}`)
           .then(res => {
             res.data.forEach(service => {
               if (service.id === chat.Service.id) {
@@ -312,7 +318,7 @@ export default {
       if (store.state.interval)
         clearInterval(store.state.interval)
 
-      axios.get(`http://api.askhim.ctrempe.fr:80/chat/get-discussion-by-id/${chat.Uuid}`)
+      axios.get(`http://192.168.50.11:4001/chat/get-discussion-by-id/${chat.Uuid}`)
           .then(res => {
             this.messages = res.data.messages
             this.discussionToken = res.data.uuid
@@ -320,12 +326,12 @@ export default {
             this.lastChat = chat
           })
 
-      axios.put(`http://api.askhim.ctrempe.fr:80/chat/read-messages?discussionId=${chat.Uuid}&userToken=${this.guid}`)
+      axios.put(`http://192.168.50.11:4001/chat/read-messages?discussionId=${chat.Uuid}&userToken=${this.guid}`)
 
       this.chatDisable = false
 
       const intervalName = setInterval(() => {
-        axios.get(`http://api.askhim.ctrempe.fr:80/chat/get-discussion-by-id/${chat.Uuid}`)
+        axios.get(`http://192.168.50.11:4001/chat/get-discussion-by-id/${chat.Uuid}`)
             .then(res => {
               console.log(res)
               this.messages = res.data.messages
@@ -341,7 +347,7 @@ export default {
     },
     sendMessage(e) {
       if (this.discussionToken !== 0 && this.guid && this.writeMessage !== "") {
-        axios.post(`http://api.askhim.ctrempe.fr:80/chat/post-message?discussionId=${this.discussionToken}&userToken=${this.guid}&message=${this.writeMessage}`)
+        axios.post(`http://192.168.50.11:4001/chat/post-message?discussionId=${this.discussionToken}&userToken=${this.guid}&message=${this.writeMessage}`)
             .then(res => {
               if (res.data.success) {
                 this.loadChat(this.lastChat)
@@ -355,10 +361,10 @@ export default {
 
     reloadConv() {
 
-      axios.get(`http://api.askhim.ctrempe.fr:80/user/get-user-by-token/${this.guid}`)
+      axios.get(`http://192.168.50.11:4001/user/get-user-by-token/${this.guid}`)
           .then(res => {
             this.id = res.data.id
-            axios.get(`http://api.askhim.ctrempe.fr:80/chat/get-discussions-from-user-by-token/${this.guid}`)
+            axios.get(`http://192.168.50.11:4001/chat/get-discussions-from-user-by-token/${this.guid}`)
                 .then(res => {
                   this.utilisateurs = []
                   this.archiveUtilisateurs = []
@@ -392,10 +398,10 @@ export default {
                 })
           })
       const interval2 = setInterval(() => {
-        axios.get(`http://api.askhim.ctrempe.fr:80/user/get-user-by-token/${this.guid}`)
+        axios.get(`http://192.168.50.11:4001/user/get-user-by-token/${this.guid}`)
             .then(res => {
               this.id = res.data.id
-              axios.get(`http://api.askhim.ctrempe.fr:80/chat/get-discussions-from-user-by-token/${this.guid}`)
+              axios.get(`http://192.168.50.11:4001/chat/get-discussions-from-user-by-token/${this.guid}`)
                   .then(res => {
                     this.utilisateurs = []
                     this.archiveUtilisateurs = []
@@ -435,11 +441,11 @@ export default {
   ,
   mounted() {
     const token = this.$route.params.chatService
-    axios.get(`http://api.askhim.ctrempe.fr:80/user/get-user-by-token/${this.guid}`)
+    axios.get(`http://192.168.50.11:4001/user/get-user-by-token/${this.guid}`)
         .then(res => {
           this.id = res.data.id
 
-          axios.get(`http://api.askhim.ctrempe.fr:80/chat/get-discussions-from-user-by-token/${this.guid}`)
+          axios.get(`http://192.168.50.11:4001/chat/get-discussions-from-user-by-token/${this.guid}`)
               .then(res => {
                 res.data.forEach(discussion => {
                   if (discussion.service.state) {

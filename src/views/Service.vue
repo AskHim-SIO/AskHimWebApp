@@ -171,7 +171,7 @@ export default {
   methods: {
     initMessage() {
       axios
-          .post(`http://api.askhim.ctrempe.fr/chat/init-discussion?serviceId=${this.id}&userToken=${store.state.guid}`)
+          .post(`http://192.168.50.11:4001/chat/init-discussion?serviceId=${this.id}&userToken=${store.state.guid}`)
           .then((res) => {
             this.$router.push({
               name: 'Chat',
@@ -189,7 +189,7 @@ export default {
   },
   mounted() {
     axios
-        .get('http://api.askhim.ctrempe.fr/service/get-service/' + this.id)
+        .get('http://192.168.50.11:4001/service/get-service/' + this.id)
         .then(response => {
           if (response.data.state === false) {
             this.$router.push('/home');
@@ -239,10 +239,10 @@ export default {
           }
         })
     axios
-        .get(`http://api.askhim.ctrempe.fr:80/user/get-user-by-token/${store.state.guid}`)
+        .get(`http://192.168.50.11:4001/user/get-user-by-token/${store.state.guid}`)
         .then(res => {
           axios
-              .get(`http://api.askhim.ctrempe.fr:80/service/get-services-from-user-by-id/${res.data.id}`)
+              .get(`http://192.168.50.11:4001/service/get-services-from-user-by-id/${res.data.id}`)
               .then((res) => {
                 res.data.forEach(service => {
                   if (service.id == this.id) {

@@ -194,7 +194,7 @@ export default {
       this.debounce = setTimeout(() => {
         if (!this.count) {
           axios
-              .get(`http://api.askhim.ctrempe.fr:80/service/search-services?query=${this.recherche}&count=100`)
+              .get(`http://192.168.50.11:4001/service/search-services?query=${this.recherche}&count=100`)
               .then(response => {
                 this.services = []
                 response.data.forEach(service => {
@@ -209,7 +209,7 @@ export default {
               })
         } else {
           axios
-              .get(`http://api.askhim.ctrempe.fr:80/service/search-services?query=${this.recherche}&count=${this.count}`)
+              .get(`http://192.168.50.11:4001/service/search-services?query=${this.recherche}&count=${this.count}`)
               .then(response => {
                 this.services = []
                 let cpt = 0
@@ -243,12 +243,12 @@ export default {
       this.select = this.$route.params.type
     }
     axios
-        .get("http://api.askhim.ctrempe.fr:80/type/get-types")
+        .get("http://192.168.50.11:4001/type/get-types")
         .then(response => (this.typeServices = response.data))
 
     if (this.select === 'Tout') {
       axios
-          .get("http://api.askhim.ctrempe.fr:80/service/get-recent-services")
+          .get("http://192.168.50.11:4001/service/get-recent-services")
           .then(response => {
             response.data.forEach(service => {
                 this.services.push(service)
@@ -257,7 +257,7 @@ export default {
           })
     } else {
       axios
-          .get("http://api.askhim.ctrempe.fr:80/service/get-recent-services")
+          .get("http://192.168.50.11:4001/service/get-recent-services")
           .then(response => {
             response.data.forEach(service => {
               if (service.type.libelle === this.select) {

@@ -6,7 +6,7 @@
         <div class="flex items-center justify-between py-4">
           <div>
             <router-link to="/home">
-              <img src="http://cdn.askhim.ctrempe.fr/logo-black.png" class="w-12 h-auto ">
+              <img src="http://192.168.10.11/cdn/logo-black.png" class="w-12 h-auto ">
             </router-link>
           </div>
 
@@ -102,7 +102,7 @@
                       class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                       aria-expanded="false" data-dropdown-toggle="dropdown">
                 <span class="sr-only">Ouvrir le menu</span>
-                <img class="w-8 h-8 rounded-full" src="http://cdn.askhim.ctrempe.fr/userPicture.png"
+                <img class="w-8 h-8 rounded-full" src="http://192.168.10.11/cdn/userPicture.png"
                      alt="user photo">
               </button>
             </div>
